@@ -4,13 +4,17 @@ import 'package:table_sticky_headers/table_sticky_headers.dart';
 
 void main() {
   runApp(
-    MyTable(),
+    MyApp(),
   );
 }
 
-class MyTable extends StatefulWidget {
+class MyApp extends StatelessWidget {
   @override
-  _MyTableState createState() => _MyTableState();
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: MyTable(),
+    );
+  }
 }
 
 class Category {
@@ -25,6 +29,11 @@ class Candidate {
   List<int> score;
 
   Candidate({this.title, this.score});
+}
+
+class MyTable extends StatefulWidget {
+  @override
+  _MyTableState createState() => _MyTableState();
 }
 
 class _MyTableState extends State<MyTable> {
@@ -54,46 +63,95 @@ class _MyTableState extends State<MyTable> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Go Sardine - WADM'),
-          backgroundColor: Colors.amber,
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Go Sardine - WADM'),
+        backgroundColor: Colors.amber,
+      ),
+      body: StickyHeadersTable(
+        columnsLength: _candidates.length,
+        rowsLength: _categories.length + 1, // 항목 + 총합
+        columnsTitleBuilder: (i) => Container(
+          height: 50,
+          width: 50,
+          child: CandidateFieldWidget(),
         ),
-        body: StickyHeadersTable(
-          columnsLength: _candidates.length,
-          rowsLength: _categories.length + 1, // 항목 + 총합
-          columnsTitleBuilder: (i) => Container(
-            height: 50,
-            width: 50,
-            child: CandidateFieldWidget(),
-          ),
-          rowsTitleBuilder: (i) {
-            if (i == _categories.length) {
-              return Container(
-                height: 80,
-                width: 80,
-                child: CategoryFieldWidget(),
-              );
-            }
+        rowsTitleBuilder: (i) {
+          if (i == _categories.length) {
             return Container(
               height: 50,
               width: 50,
-              child: CategoryFieldWidget(),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text('총합'),
+                ],
+              ),
             );
-          },
-          contentCellBuilder: (i, j) => Container(
+          }
+          return Container(
             height: 50,
             width: 50,
-            child: ScoreFieldWidget(),
-          ),
-          legendCell: Text('항목 \\ 후보'),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () => addCandidate('wow'),
-          tooltip: 'Increment',
-          child: Icon(Icons.add),
-        ),
+            child: CategoryFieldWidget(),
+          );
+        },
+        contentCellBuilder: (i, j) {
+          // Row for Total
+          if (j == _categories.length) {
+            return Text(i.toString());
+          } else {
+            return Container(
+              height: 50,
+              width: 50,
+              child: ScoreFieldWidget(),
+            );
+          }
+        },
+        legendCell: Text('항목 \\ 후보'),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Container(
+                    child: Text(
+                      "원하는 동작을 선택해주세요",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.blue,
+                      ),
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      RaisedButton(
+                        child: Text('후보 추가'),
+                        onPressed: () {
+                          addCandidate('추가');
+                          Navigator.pop(context);
+                        },
+                      ),
+                      RaisedButton(
+                        child: Text('카테고리 추가'),
+                        onPressed: () {
+                          addCategory(Category(title: 'wow', weight: 5));
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+        tooltip: 'Increment',
+        child: Icon(Icons.add),
       ),
     );
   }
