@@ -125,6 +125,7 @@ class _MyTableState extends State<MyTable> {
                         color: Colors.blue,
                       ),
                     ),
+                    margin: EdgeInsets.only(bottom: 20),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
