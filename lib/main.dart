@@ -26,7 +26,6 @@ class Category {
   bool isDuplicated(Category category) {
     return this.title == category.title;
   }
-
 }
 
 class Candidate {
@@ -37,13 +36,37 @@ class Candidate {
 }
 
 class WadmTable {
-  var data;
+  List<Candidate> candidates;
   List<Category> categories;
 
-  WadmTable({this.data, this.categories});
+  WadmTable({this.candidates, this.categories});
 
   void sort() {
     print('sorted!!');
+  }
+
+  bool candidateTitleExists(String title) {
+    for (var candidate in this.candidates) {
+      if (candidate.title == title) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  void addCandidate(String title) {
+    Candidate newCandidate = Candidate(
+        title: title,
+        scores: List<int>.filled(this.categories.length, 0, growable: true));
+    this.candidates.add(newCandidate);
+  }
+
+  void addCategory(Category category) {
+    this.categories.add(category);
+    for (var candidate in this.candidates) {
+      candidate.scores.add(0);
+    }
+    this.sort();
   }
 }
 
@@ -53,33 +76,37 @@ class MyTable extends StatefulWidget {
 }
 
 class _MyTableState extends State<MyTable> {
-  WadmTable wadmTable = WadmTable(data: {}, categories: []);
+  WadmTable wadmTable = WadmTable(candidates: [], categories: []);
+
+  final candidateController = TextEditingController();
+  final categoryTitleController = TextEditingController();
+  final catetoryWeightController = TextEditingController();
 
   void addCandidate(String title) {
-    if (wadmTable.data.containsKey(title)) {
+    if (wadmTable.candidateTitleExists(title)) {
       print("exists!!");
       print(title);
       return;
-    }
-    else {
+    } else {
       setState(() {
-        wadmTable.data[title] = [];
+        wadmTable.addCandidate(title);
       });
     }
   }
 
-  void addCategory(Category category) {
+  void addCategory({String title, int weight}) {
+    Category newCategory = Category(title: title, weight: weight);
+
     for (Category registeredCategory in wadmTable.categories) {
-      if (registeredCategory.isDuplicated(category)) {
+      if (registeredCategory.isDuplicated(newCategory)) {
         print("exists!!");
-        print(category.title);
+        print(newCategory.title);
         return;
       }
     }
 
     setState(() {
-      wadmTable.categories.add(category);
-      wadmTable.sort();
+      wadmTable.addCategory(newCategory);
     });
   }
 
@@ -91,12 +118,12 @@ class _MyTableState extends State<MyTable> {
         backgroundColor: Colors.amber,
       ),
       body: StickyHeadersTable(
-        columnsLength: wadmTable.data.length,
+        columnsLength: wadmTable.candidates.length,
         rowsLength: wadmTable.categories.length + 1, // 항목 + 총합
         columnsTitleBuilder: (i) => Container(
           height: 50,
           width: 50,
-          child: CandidateFieldWidget(),
+          child: CandidateFieldWidget(candidate: this.wadmTable.candidates[i]),
         ),
         rowsTitleBuilder: (i) {
           if (i == wadmTable.categories.length) {
@@ -114,7 +141,7 @@ class _MyTableState extends State<MyTable> {
           return Container(
             height: 50,
             width: 50,
-            child: CategoryFieldWidget(),
+            child: CategoryFieldWidget(category: this.wadmTable.categories[i]),
           );
         },
         contentCellBuilder: (i, j) {
@@ -153,17 +180,68 @@ class _MyTableState extends State<MyTable> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       RaisedButton(
-                        child: Text('후보 추가'),
+                        child: Text('항목 추가'),
                         onPressed: () {
-                          addCandidate('추가');
-                          Navigator.pop(context);
+                          showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              content: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  TextField(
+                                    controller: categoryTitleController,
+                                    decoration:
+                                        InputDecoration(labelText: "항목명"),
+                                  ),
+                                  TextField(
+                                    controller: catetoryWeightController,
+                                    decoration:
+                                        InputDecoration(labelText: "가중치"),
+                                  ),
+                                  RaisedButton(
+                                    child: Text('항목 추가'),
+                                    onPressed: () {
+                                      addCategory(
+                                        title: categoryTitleController.text,
+                                        weight: int.parse(
+                                            catetoryWeightController.text),
+                                      );
+                                      Navigator.of(context)
+                                          .popUntil((route) => route.isFirst);
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
                         },
                       ),
                       RaisedButton(
-                        child: Text('카테고리 추가'),
+                        child: Text('후보 추가'),
                         onPressed: () {
-                          addCategory(Category(title: 'wow', weight: 5));
-                          Navigator.pop(context);
+                          showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              content: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  TextField(
+                                    controller: candidateController,
+                                    decoration:
+                                        InputDecoration(labelText: "후보명"),
+                                  ),
+                                  RaisedButton(
+                                    child: Text('항목 추가'),
+                                    onPressed: () {
+                                      addCandidate(candidateController.text);
+                                      Navigator.of(context)
+                                          .popUntil((route) => route.isFirst);
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
                         },
                       ),
                     ],
@@ -319,19 +397,27 @@ class ScoreFieldWidget extends StatelessWidget {
 }
 
 class CandidateFieldWidget extends StatelessWidget {
+  final Candidate candidate;
+
+  CandidateFieldWidget({this.candidate});
+
   @override
   Widget build(BuildContext context) {
     return TextField(
-      decoration: InputDecoration(labelText: "후보"),
+      decoration: InputDecoration(labelText: this.candidate.title),
     );
   }
 }
 
 class CategoryFieldWidget extends StatelessWidget {
+  final Category category;
+
+  CategoryFieldWidget({this.category});
+
   @override
   Widget build(BuildContext context) {
     return TextField(
-      decoration: InputDecoration(labelText: "항목"),
+      decoration: InputDecoration(labelText: this.category.title),
     );
   }
 }
