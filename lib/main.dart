@@ -122,26 +122,29 @@ class _MyTableState extends State<MyTable> {
         rowsLength: wadmTable.categories.length + 1, // 항목 + 총합
         columnsTitleBuilder: (i) => Container(
           height: 50,
-          width: 50,
+          width: 100,
           child: CandidateFieldWidget(candidate: this.wadmTable.candidates[i]),
+          margin: EdgeInsets.all(10),
         ),
         rowsTitleBuilder: (i) {
           if (i == wadmTable.categories.length) {
             return Container(
               height: 50,
-              width: 50,
+              width: 100,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text('총합'),
                 ],
               ),
+              margin: EdgeInsets.all(10),
             );
           }
           return Container(
             height: 50,
-            width: 50,
+            width: 100,
             child: CategoryFieldWidget(category: this.wadmTable.categories[i]),
+            margin: EdgeInsets.all(10),
           );
         },
         contentCellBuilder: (i, j) {
@@ -151,7 +154,7 @@ class _MyTableState extends State<MyTable> {
           } else {
             return Container(
               height: 50,
-              width: 50,
+              width: 100,
               child: ScoreFieldWidget(),
             );
           }
@@ -197,6 +200,11 @@ class _MyTableState extends State<MyTable> {
                                     controller: catetoryWeightController,
                                     decoration:
                                         InputDecoration(labelText: "가중치"),
+                                    keyboardType: TextInputType.number,
+                                    inputFormatters: <TextInputFormatter>[
+                                      WhitelistingTextInputFormatter.digitsOnly,
+                                      LengthLimitingTextInputFormatter(1),
+                                    ],
                                   ),
                                   RaisedButton(
                                     child: Text('항목 추가'),
@@ -206,6 +214,8 @@ class _MyTableState extends State<MyTable> {
                                         weight: int.parse(
                                             catetoryWeightController.text),
                                       );
+                                      categoryTitleController.clear();
+                                      catetoryWeightController.clear();
                                       Navigator.of(context)
                                           .popUntil((route) => route.isFirst);
                                     },
@@ -234,6 +244,7 @@ class _MyTableState extends State<MyTable> {
                                     child: Text('항목 추가'),
                                     onPressed: () {
                                       addCandidate(candidateController.text);
+                                      candidateController.clear();
                                       Navigator.of(context)
                                           .popUntil((route) => route.isFirst);
                                     },
@@ -258,7 +269,6 @@ class _MyTableState extends State<MyTable> {
   }
 }
 
-
 class ScoreFieldWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -273,7 +283,6 @@ class ScoreFieldWidget extends StatelessWidget {
   }
 }
 
-
 class CandidateFieldWidget extends StatelessWidget {
   final Candidate candidate;
 
@@ -281,8 +290,17 @@ class CandidateFieldWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      decoration: InputDecoration(labelText: this.candidate.title),
+    return FlatButton(
+      color: Colors.cyan,
+      textColor: Colors.white,
+      padding: EdgeInsets.all(4.0),
+      onPressed: () {
+        /*...*/
+      },
+      child: Text(
+        this.candidate.title,
+        style: TextStyle(fontSize: 20.0),
+      ),
     );
   }
 }
@@ -294,8 +312,25 @@ class CategoryFieldWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      decoration: InputDecoration(labelText: this.category.title),
+    return FlatButton(
+      color: Colors.lightGreen,
+      textColor: Colors.white,
+      padding: EdgeInsets.all(2.0),
+      onPressed: () {
+        /*...*/
+      },
+      child: Column(
+        children: <Widget>[
+          Text(
+            this.category.title,
+            style: TextStyle(fontSize: 20.0),
+          ),
+          Text(
+            this.category.weight.toString(),
+            style: TextStyle(fontSize: 20.0),
+          ),
+        ],
+      ),
     );
   }
 }
