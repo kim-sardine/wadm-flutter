@@ -35,11 +35,23 @@ class Candidate {
   Candidate({this.title, this.scores});
 }
 
+const CellDimensions myCellDimensions = CellDimensions(
+  contentCellWidth: 110,
+  contentCellHeight: 70,
+  stickyLegendWidth: 100,
+  stickyLegendHeight: 60,
+);
+
 class WadmTable {
   List<Candidate> candidates;
   List<Category> categories;
+  CellDimensions cellDimensions;
 
-  WadmTable({this.candidates, this.categories});
+  WadmTable({
+    this.candidates,
+    this.categories,
+    this.cellDimensions = myCellDimensions,
+  });
 
   void sort() {
     print('sorted!!');
@@ -118,33 +130,37 @@ class _MyTableState extends State<MyTable> {
         backgroundColor: Colors.amber,
       ),
       body: StickyHeadersTable(
+        cellDimensions: wadmTable.cellDimensions,
         columnsLength: wadmTable.candidates.length,
         rowsLength: wadmTable.categories.length + 1, // 항목 + 총합
         columnsTitleBuilder: (i) => Container(
-          height: 50,
-          width: 100,
+          height: myCellDimensions.stickyLegendHeight,
+          width: myCellDimensions.contentCellWidth,
           child: CandidateFieldWidget(candidate: this.wadmTable.candidates[i]),
-          margin: EdgeInsets.all(10),
+          margin: EdgeInsets.symmetric(
+            horizontal: 5,
+          ),
         ),
         rowsTitleBuilder: (i) {
           if (i == wadmTable.categories.length) {
             return Container(
-              height: 50,
-              width: 100,
+              height: myCellDimensions.contentCellHeight,
+              width: myCellDimensions.stickyLegendWidth,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text('총합'),
                 ],
               ),
-              margin: EdgeInsets.all(10),
             );
           }
           return Container(
-            height: 50,
-            width: 100,
+            height: myCellDimensions.contentCellHeight,
+            width: myCellDimensions.stickyLegendWidth,
             child: CategoryFieldWidget(category: this.wadmTable.categories[i]),
-            margin: EdgeInsets.all(10),
+            margin: EdgeInsets.symmetric(
+              vertical: 5,
+            ),
           );
         },
         contentCellBuilder: (i, j) {
@@ -153,9 +169,10 @@ class _MyTableState extends State<MyTable> {
             return Text(i.toString());
           } else {
             return Container(
-              height: 50,
-              width: 100,
+              height: myCellDimensions.contentCellHeight,
+              width: myCellDimensions.contentCellWidth / 2,
               child: ScoreFieldWidget(),
+              margin: EdgeInsets.symmetric(horizontal: 5),
             );
           }
         },
@@ -299,6 +316,8 @@ class CandidateFieldWidget extends StatelessWidget {
       },
       child: Text(
         this.candidate.title,
+        maxLines: 2,
+        overflow: TextOverflow.ellipsis,
         style: TextStyle(fontSize: 20.0),
       ),
     );
@@ -315,19 +334,21 @@ class CategoryFieldWidget extends StatelessWidget {
     return FlatButton(
       color: Colors.lightGreen,
       textColor: Colors.white,
-      padding: EdgeInsets.all(2.0),
       onPressed: () {
         /*...*/
       },
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
           Text(
             this.category.title,
-            style: TextStyle(fontSize: 20.0),
+            style: TextStyle(fontSize: 20.0, color: Colors.black),
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
           ),
           Text(
             this.category.weight.toString(),
-            style: TextStyle(fontSize: 20.0),
+            style: TextStyle(fontSize: 20.0, fontStyle: FontStyle.italic),
           ),
         ],
       ),
