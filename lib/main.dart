@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:table_sticky_headers/table_sticky_headers.dart';
+import './utils.dart';
 
 void main() {
   runApp(
@@ -220,7 +221,7 @@ class _MyTableState extends State<MyTable> {
                                     keyboardType: TextInputType.number,
                                     inputFormatters: <TextInputFormatter>[
                                       WhitelistingTextInputFormatter.digitsOnly,
-                                      LengthLimitingTextInputFormatter(1),
+                                      FromOneToTenTextInputFormatter(),
                                     ],
                                   ),
                                   RaisedButton(
@@ -290,11 +291,14 @@ class ScoreFieldWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      onChanged: (q) {
+        print('changed ' + q);
+      },
       decoration: InputDecoration(labelText: "점수"),
       keyboardType: TextInputType.number,
       inputFormatters: <TextInputFormatter>[
         WhitelistingTextInputFormatter.digitsOnly,
-        LengthLimitingTextInputFormatter(1),
+        FromOneToTenTextInputFormatter(),
       ],
     );
   }
