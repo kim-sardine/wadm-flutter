@@ -55,6 +55,7 @@ class WadmTable {
   });
 
   void sort() {
+    // TODO: Implement Sorting
     print('sorted!!');
   }
 
@@ -91,18 +92,15 @@ class MyTable extends StatefulWidget {
 class _MyTableState extends State<MyTable> {
   WadmTable wadmTable = WadmTable(candidates: [], categories: []);
 
-  final candidateController = TextEditingController();
-  final categoryTitleController = TextEditingController();
-  final catetoryWeightController = TextEditingController();
-
   void addCandidate(String title) {
-    if (wadmTable.candidateTitleExists(title)) {
+    if (this.wadmTable.candidateTitleExists(title)) {
+      // TODO: Show warning message
       print("exists!!");
       print(title);
       return;
     } else {
       setState(() {
-        wadmTable.addCandidate(title);
+        this.wadmTable.addCandidate(title);
       });
     }
   }
@@ -110,8 +108,9 @@ class _MyTableState extends State<MyTable> {
   void addCategory({String title, int weight}) {
     Category newCategory = Category(title: title, weight: weight);
 
-    for (Category registeredCategory in wadmTable.categories) {
+    for (Category registeredCategory in this.wadmTable.categories) {
       if (registeredCategory.isDuplicated(newCategory)) {
+        // TODO: Show warning message
         print("exists!!");
         print(newCategory.title);
         return;
@@ -119,21 +118,33 @@ class _MyTableState extends State<MyTable> {
     }
 
     setState(() {
-      wadmTable.addCategory(newCategory);
+      this.wadmTable.addCategory(newCategory);
     });
   }
 
+  void setScore(int rowIdx, int colIdx, int score) {
+    setState(() {
+      this.wadmTable.candidates[colIdx].scores[rowIdx] = score;
+    });
+    print('setScore : ' + this.wadmTable.candidates[colIdx].title);
+    print(this.wadmTable.candidates[colIdx].scores);
+  }
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {  
+    final candidateController = TextEditingController();
+    final categoryTitleController = TextEditingController();
+    final catetoryWeightController = TextEditingController();
+    
     return Scaffold(
       appBar: AppBar(
         title: Text('Go Sardine - WADM'),
         backgroundColor: Colors.amber,
       ),
       body: StickyHeadersTable(
-        cellDimensions: wadmTable.cellDimensions,
-        columnsLength: wadmTable.candidates.length,
-        rowsLength: wadmTable.categories.length + 1, // 항목 + 총합
+        cellDimensions: this.wadmTable.cellDimensions,
+        columnsLength: this.wadmTable.candidates.length,
+        rowsLength: this.wadmTable.categories.length + 1, // 항목 + 총합
         columnsTitleBuilder: (i) => Container(
           height: myCellDimensions.stickyLegendHeight,
           width: myCellDimensions.contentCellWidth,
@@ -143,7 +154,7 @@ class _MyTableState extends State<MyTable> {
           ),
         ),
         rowsTitleBuilder: (i) {
-          if (i == wadmTable.categories.length) {
+          if (i == this.wadmTable.categories.length) {
             return Container(
               height: myCellDimensions.contentCellHeight,
               width: myCellDimensions.stickyLegendWidth,
@@ -166,13 +177,14 @@ class _MyTableState extends State<MyTable> {
         },
         contentCellBuilder: (i, j) {
           // Row for Total
-          if (j == wadmTable.categories.length) {
+          if (j == this.wadmTable.categories.length) {
+            // TODO: Calculate total score
             return Text(i.toString());
           } else {
             return Container(
               height: myCellDimensions.contentCellHeight,
               width: myCellDimensions.contentCellWidth,
-              child: ScoreFieldWidget(),
+              child: ScoreFieldWidget(rowIdx: j, colIdx: i, parentAction: setScore,),
               margin: EdgeInsets.symmetric(horizontal: 5),
             );
           }
@@ -288,11 +300,20 @@ class _MyTableState extends State<MyTable> {
 }
 
 class ScoreFieldWidget extends StatelessWidget {
+  final void Function(int, int, int) parentAction;
+  final int rowIdx;
+  final int colIdx;
+
+  ScoreFieldWidget({this.rowIdx, this.colIdx, this.parentAction});
+
   @override
   Widget build(BuildContext context) {
     return TextField(
-      onChanged: (q) {
-        print('changed ' + q);
+      onChanged: (value) {
+        print('rowIdx : ' + this.rowIdx.toString());
+        print('colIdx : ' + this.colIdx.toString());
+        parentAction(this.rowIdx, this.colIdx, int.parse(value));
+        print('changed ' + value);
       },
       decoration: InputDecoration(labelText: "점수 (1~10)"),
       keyboardType: TextInputType.number,
@@ -316,7 +337,7 @@ class CandidateFieldWidget extends StatelessWidget {
       textColor: Colors.white,
       padding: EdgeInsets.all(4.0),
       onPressed: () {
-        /*...*/
+        /* 내용 수정 기능 추가 */
       },
       child: Text(
         this.candidate.title,
@@ -339,7 +360,7 @@ class CategoryFieldWidget extends StatelessWidget {
       color: Colors.lightGreen,
       textColor: Colors.white,
       onPressed: () {
-        /*...*/
+        /* 내용 수정 기능 추가 */
       },
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
