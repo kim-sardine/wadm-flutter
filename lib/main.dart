@@ -171,7 +171,7 @@ class _MyTableState extends State<MyTable> {
           } else {
             return Container(
               height: myCellDimensions.contentCellHeight,
-              width: myCellDimensions.contentCellWidth / 2,
+              width: myCellDimensions.contentCellWidth,
               child: ScoreFieldWidget(),
               margin: EdgeInsets.symmetric(horizontal: 5),
             );
@@ -217,7 +217,7 @@ class _MyTableState extends State<MyTable> {
                                   TextField(
                                     controller: catetoryWeightController,
                                     decoration:
-                                        InputDecoration(labelText: "가중치"),
+                                        InputDecoration(labelText: "가중치 (1~10)"),
                                     keyboardType: TextInputType.number,
                                     inputFormatters: <TextInputFormatter>[
                                       WhitelistingTextInputFormatter.digitsOnly,
@@ -294,7 +294,7 @@ class ScoreFieldWidget extends StatelessWidget {
       onChanged: (q) {
         print('changed ' + q);
       },
-      decoration: InputDecoration(labelText: "점수"),
+      decoration: InputDecoration(labelText: "점수 (1~10)"),
       keyboardType: TextInputType.number,
       inputFormatters: <TextInputFormatter>[
         WhitelistingTextInputFormatter.digitsOnly,
