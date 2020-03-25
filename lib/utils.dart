@@ -15,7 +15,7 @@ class FromOneToTenTextInputFormatter extends TextInputFormatter {
         selection: TextSelection.collapsed(offset: 0),
       );
     }
-    else if (int.parse(newValue.text) > 11) {
+    else if (int.parse(newValue.text) > 10) {
       return TextEditingValue(
         text: '10',
         selection: TextSelection.collapsed(offset: 2),
