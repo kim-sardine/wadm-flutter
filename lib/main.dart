@@ -82,6 +82,18 @@ class WadmTable {
     }
     this.sort();
   }
+
+  int getTotal(int colIdx) {
+    // candidate's score * category's weight
+    int total = 0;
+    Candidate candidate = this.candidates[colIdx];
+
+    for (var i = 0; i < this.categories.length; i++) {
+      total += (this.categories[i].weight * candidate.scores[i]);
+    }
+
+    return total;
+  }
 }
 
 class MyTable extends StatefulWidget {
@@ -130,6 +142,7 @@ class _MyTableState extends State<MyTable> {
     print(this.wadmTable.candidates[colIdx].scores);
   }
 
+
   @override
   Widget build(BuildContext context) {  
     final candidateController = TextEditingController();
@@ -175,16 +188,16 @@ class _MyTableState extends State<MyTable> {
             ),
           );
         },
-        contentCellBuilder: (i, j) {
+        contentCellBuilder: (colIdx, rowIdx) {
           // Row for Total
-          if (j == this.wadmTable.categories.length) {
+          if (rowIdx == this.wadmTable.categories.length) {
             // TODO: Calculate total score
-            return Text(i.toString());
+            return Text(this.wadmTable.getTotal(colIdx).toString());
           } else {
             return Container(
               height: myCellDimensions.contentCellHeight,
               width: myCellDimensions.contentCellWidth,
-              child: ScoreFieldWidget(rowIdx: j, colIdx: i, parentAction: setScore,),
+              child: ScoreFieldWidget(rowIdx: rowIdx, colIdx: colIdx, parentAction: setScore,),
               margin: EdgeInsets.symmetric(horizontal: 5),
             );
           }
