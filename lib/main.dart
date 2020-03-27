@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:table_sticky_headers/table_sticky_headers.dart';
 import './utils.dart';
+import './models.dart';
+import './widgets.dart';
 
 void main() {
   runApp(
@@ -15,84 +17,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       home: MyTable(),
     );
-  }
-}
-
-class Category {
-  String title;
-  int weight;
-
-  Category({this.title, this.weight});
-
-  bool isDuplicated(Category category) {
-    return this.title == category.title;
-  }
-}
-
-class Candidate {
-  String title;
-  List<int> scores;
-
-  Candidate({this.title, this.scores});
-}
-
-const CellDimensions myCellDimensions = CellDimensions(
-  contentCellWidth: 110,
-  contentCellHeight: 70,
-  stickyLegendWidth: 100,
-  stickyLegendHeight: 60,
-);
-
-class WadmTable {
-  List<Candidate> candidates;
-  List<Category> categories;
-  CellDimensions cellDimensions;
-
-  WadmTable({
-    this.candidates,
-    this.categories,
-    this.cellDimensions = myCellDimensions,
-  });
-
-  void sort() {
-    // TODO: Implement Sorting
-    print('sorted!!');
-  }
-
-  bool candidateTitleExists(String title) {
-    for (var candidate in this.candidates) {
-      if (candidate.title == title) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  void addCandidate(String title) {
-    Candidate newCandidate = Candidate(
-        title: title,
-        scores: List<int>.filled(this.categories.length, 0, growable: true));
-    this.candidates.add(newCandidate);
-  }
-
-  void addCategory(Category category) {
-    this.categories.add(category);
-    for (var candidate in this.candidates) {
-      candidate.scores.add(0);
-    }
-    this.sort();
-  }
-
-  int getTotal(int colIdx) {
-    // candidate's score * category's weight
-    int total = 0;
-    Candidate candidate = this.candidates[colIdx];
-
-    for (var i = 0; i < this.categories.length; i++) {
-      total += (this.categories[i].weight * candidate.scores[i]);
-    }
-
-    return total;
   }
 }
 
@@ -307,88 +231,6 @@ class _MyTableState extends State<MyTable> {
         },
         tooltip: 'Increment',
         child: Icon(Icons.add),
-      ),
-    );
-  }
-}
-
-class ScoreFieldWidget extends StatelessWidget {
-  final void Function(int, int, int) parentAction;
-  final int rowIdx;
-  final int colIdx;
-
-  ScoreFieldWidget({this.rowIdx, this.colIdx, this.parentAction});
-
-  @override
-  Widget build(BuildContext context) {
-    return TextField(
-      onChanged: (value) {
-        print('rowIdx : ' + this.rowIdx.toString());
-        print('colIdx : ' + this.colIdx.toString());
-        parentAction(this.rowIdx, this.colIdx, int.parse(value));
-        print('changed ' + value);
-      },
-      decoration: InputDecoration(labelText: "점수 (1~10)"),
-      keyboardType: TextInputType.number,
-      inputFormatters: <TextInputFormatter>[
-        WhitelistingTextInputFormatter.digitsOnly,
-        FromOneToTenTextInputFormatter(),
-      ],
-    );
-  }
-}
-
-class CandidateFieldWidget extends StatelessWidget {
-  final Candidate candidate;
-
-  CandidateFieldWidget({this.candidate});
-
-  @override
-  Widget build(BuildContext context) {
-    return FlatButton(
-      color: Colors.cyan,
-      textColor: Colors.white,
-      padding: EdgeInsets.all(4.0),
-      onPressed: () {
-        /* 내용 수정 기능 추가 */
-      },
-      child: Text(
-        this.candidate.title,
-        maxLines: 2,
-        overflow: TextOverflow.ellipsis,
-        style: TextStyle(fontSize: 20.0),
-      ),
-    );
-  }
-}
-
-class CategoryFieldWidget extends StatelessWidget {
-  final Category category;
-
-  CategoryFieldWidget({this.category});
-
-  @override
-  Widget build(BuildContext context) {
-    return FlatButton(
-      color: Colors.lightGreen,
-      textColor: Colors.white,
-      onPressed: () {
-        /* 내용 수정 기능 추가 */
-      },
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: <Widget>[
-          Text(
-            this.category.title,
-            style: TextStyle(fontSize: 20.0, color: Colors.black),
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-          ),
-          Text(
-            this.category.weight.toString(),
-            style: TextStyle(fontSize: 20.0, fontStyle: FontStyle.italic),
-          ),
-        ],
       ),
     );
   }
