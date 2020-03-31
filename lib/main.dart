@@ -112,7 +112,6 @@ class _MyTableState extends State<MyTable> {
         contentCellBuilder: (colIdx, rowIdx) {
           // Row for Total
           if (rowIdx == this.wadmTable.categories.length) {
-            // TODO: Calculate total score
             return Text(this.wadmTable.getTotal(colIdx).toString());
           } else {
             return Container(

@@ -39,16 +39,23 @@ class WadmTable {
 
   void sort() {
     // make list with weight and index
-    List<Map<String, int>> indexWithWeight = [];
+    List<Map<String, dynamic>> indexWithWeight = [];
     for (var i = 0; i < this.categories.length; i++) {
       indexWithWeight.add({
         'index': i,
-        'weight': this.categories[i].weight
+        'weight': this.categories[i].weight,
+        'title': this.categories[i].title,
       });
     }
 
-    // sort by weight
-    indexWithWeight.sort((a, b) => (b['weight'].compareTo(a['weight'])));
+    // sort by 1.weight, 2.title
+    indexWithWeight.sort((a, b) {
+      var compare = b["weight"].compareTo(a["weight"]);
+      if (compare != 0) {
+        return compare;
+      }
+      return a["title"].compareTo(b["title"]);
+    });
 
     // update category
     List<Category> newCategory = [];
