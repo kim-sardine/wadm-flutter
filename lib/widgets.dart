@@ -7,8 +7,9 @@ class ScoreFieldWidget extends StatelessWidget {
   final void Function(int, int, int) parentAction;
   final int rowIdx;
   final int colIdx;
+  final int value;
 
-  ScoreFieldWidget({this.rowIdx, this.colIdx, this.parentAction});
+  ScoreFieldWidget({this.rowIdx, this.colIdx, this.parentAction, this.value});
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +20,7 @@ class ScoreFieldWidget extends StatelessWidget {
         parentAction(this.rowIdx, this.colIdx, int.parse(value));
         print('changed ' + value);
       },
+      controller: TextEditingController(text: this.value.toString()),
       decoration: InputDecoration(labelText: "점수 (1~10)"),
       keyboardType: TextInputType.number,
       inputFormatters: <TextInputFormatter>[

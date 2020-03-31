@@ -62,17 +62,14 @@ class _MyTableState extends State<MyTable> {
     setState(() {
       this.wadmTable.candidates[colIdx].scores[rowIdx] = score;
     });
-    print('setScore : ' + this.wadmTable.candidates[colIdx].title);
-    print(this.wadmTable.candidates[colIdx].scores);
   }
 
-
   @override
-  Widget build(BuildContext context) {  
+  Widget build(BuildContext context) {
     final candidateController = TextEditingController();
     final categoryTitleController = TextEditingController();
     final catetoryWeightController = TextEditingController();
-    
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Go Sardine - WADM'),
@@ -121,7 +118,12 @@ class _MyTableState extends State<MyTable> {
             return Container(
               height: myCellDimensions.contentCellHeight,
               width: myCellDimensions.contentCellWidth,
-              child: ScoreFieldWidget(rowIdx: rowIdx, colIdx: colIdx, parentAction: setScore,),
+              child: ScoreFieldWidget(
+                rowIdx: rowIdx,
+                colIdx: colIdx,
+                parentAction: setScore,
+                value: this.wadmTable.candidates[colIdx].scores[rowIdx],
+              ),
               margin: EdgeInsets.symmetric(horizontal: 5),
             );
           }
@@ -165,8 +167,8 @@ class _MyTableState extends State<MyTable> {
                                   ),
                                   TextField(
                                     controller: catetoryWeightController,
-                                    decoration:
-                                        InputDecoration(labelText: "가중치 (1~10)"),
+                                    decoration: InputDecoration(
+                                        labelText: "가중치 (1~10)"),
                                     keyboardType: TextInputType.number,
                                     inputFormatters: <TextInputFormatter>[
                                       WhitelistingTextInputFormatter.digitsOnly,

@@ -38,7 +38,36 @@ class WadmTable {
   });
 
   void sort() {
-    // TODO: Implement Sorting
+    // make list with weight and index
+    List<Map<String, int>> indexWithWeight = [];
+    for (var i = 0; i < this.categories.length; i++) {
+      indexWithWeight.add({
+        'index': i,
+        'weight': this.categories[i].weight
+      });
+    }
+
+    // sort by weight
+    indexWithWeight.sort((a, b) => (b['weight'].compareTo(a['weight'])));
+
+    // update category
+    List<Category> newCategory = [];
+    for (var i = 0; i < this.categories.length; i++) {
+      int targetIndex = indexWithWeight[i]['index'];
+      newCategory.add(this.categories[targetIndex]);
+    }
+    this.categories = newCategory;
+
+    // update candidate's score
+    for (var i = 0; i < this.candidates.length; i++) {
+      List<int> newScores = [];
+      for (var j = 0; j < indexWithWeight.length; j++) {
+        int targetIndex = indexWithWeight[j]['index'];
+        newScores.add(this.candidates[i].scores[targetIndex]);
+      }
+      this.candidates[i].scores = newScores;
+    }
+
     print('sorted!!');
   }
 
@@ -67,14 +96,14 @@ class WadmTable {
   }
 
   int getTotal(int colIdx) {
-    // candidate's score * category's weight
+    // total = candidate's score * category's weight
     int total = 0;
     Candidate candidate = this.candidates[colIdx];
 
     for (var i = 0; i < this.categories.length; i++) {
       total += (this.categories[i].weight * candidate.scores[i]);
     }
-
     return total;
   }
+
 }
