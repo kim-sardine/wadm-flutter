@@ -90,7 +90,7 @@ class WadmTable {
   void addCategory(Category category) {
     this.categories.add(category);
     for (var candidate in this.candidates) {
-      candidate.scores.add(0);
+      candidate.scores.add(1);
     }
     this.sort();
   }
