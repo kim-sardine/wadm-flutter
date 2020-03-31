@@ -41,7 +41,7 @@ class _MyTableState extends State<MyTable> {
     }
   }
 
-  void addCategory({String title, int weight}) {
+  void addCategory(String title, int weight) {
     Category newCategory = Category(title: title, weight: weight);
 
     for (Category registeredCategory in this.wadmTable.categories) {
@@ -66,10 +66,6 @@ class _MyTableState extends State<MyTable> {
 
   @override
   Widget build(BuildContext context) {
-    final candidateController = TextEditingController();
-    final categoryTitleController = TextEditingController();
-    final catetoryWeightController = TextEditingController();
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Go Sardine - WADM'),
@@ -134,98 +130,9 @@ class _MyTableState extends State<MyTable> {
           showDialog(
             context: context,
             builder: (context) => AlertDialog(
-              content: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Container(
-                    child: Text(
-                      "원하는 동작을 선택해주세요",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.blue,
-                      ),
-                    ),
-                    margin: EdgeInsets.only(bottom: 20),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      RaisedButton(
-                        child: Text('항목 추가'),
-                        onPressed: () {
-                          showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                              content: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  TextField(
-                                    controller: categoryTitleController,
-                                    decoration:
-                                        InputDecoration(labelText: "항목명"),
-                                  ),
-                                  TextField(
-                                    controller: catetoryWeightController,
-                                    decoration: InputDecoration(
-                                        labelText: "가중치 (1~10)"),
-                                    keyboardType: TextInputType.number,
-                                    inputFormatters: <TextInputFormatter>[
-                                      WhitelistingTextInputFormatter.digitsOnly,
-                                      FromOneToTenTextInputFormatter(),
-                                    ],
-                                  ),
-                                  RaisedButton(
-                                    child: Text('항목 추가'),
-                                    onPressed: () {
-                                      addCategory(
-                                        title: categoryTitleController.text,
-                                        weight: int.parse(
-                                            catetoryWeightController.text),
-                                      );
-                                      categoryTitleController.clear();
-                                      catetoryWeightController.clear();
-                                      Navigator.of(context)
-                                          .popUntil((route) => route.isFirst);
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                      RaisedButton(
-                        child: Text('후보 추가'),
-                        onPressed: () {
-                          showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                              content: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  TextField(
-                                    controller: candidateController,
-                                    decoration:
-                                        InputDecoration(labelText: "후보명"),
-                                  ),
-                                  RaisedButton(
-                                    child: Text('항목 추가'),
-                                    onPressed: () {
-                                      addCandidate(candidateController.text);
-                                      candidateController.clear();
-                                      Navigator.of(context)
-                                          .popUntil((route) => route.isFirst);
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                ],
+              content: FloatingActionWidget(
+                addCategory: addCategory,
+                addCandidate: addCandidate,
               ),
             ),
           );

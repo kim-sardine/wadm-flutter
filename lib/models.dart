@@ -25,7 +25,6 @@ const CellDimensions myCellDimensions = CellDimensions(
   stickyLegendHeight: 60,
 );
 
-
 class WadmTable {
   List<Candidate> candidates;
   List<Category> categories;
@@ -112,5 +111,4 @@ class WadmTable {
     }
     return total;
   }
-
 }
