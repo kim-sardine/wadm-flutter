@@ -1,7 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import './utils.dart';
 import './models.dart';
+import './sharedPref.dart';
+
 
 class ScoreFieldWidget extends StatelessWidget {
   final void Function(int, int, int) parentAction;
@@ -90,14 +94,16 @@ class CategoryFieldWidget extends StatelessWidget {
 class FloatingActionWidget extends StatelessWidget {
   final void Function(String) addCandidate;
   final void Function(String, int) addCategory;
+  final WadmTable wadmTable;
 
-  FloatingActionWidget({this.addCandidate, this.addCategory});
+  FloatingActionWidget({this.addCandidate, this.addCategory, this.wadmTable});
 
   @override
   Widget build(BuildContext context) {
     final candidateController = TextEditingController();
     final categoryTitleController = TextEditingController();
     final catetoryWeightController = TextEditingController();
+    SharedPref sharedPref = SharedPref();
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -187,6 +193,18 @@ class FloatingActionWidget extends StatelessWidget {
                   ),
                 );
               },
+            ),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            RaisedButton(
+              onPressed: () {
+                print(this.wadmTable.toJson());
+                sharedPref.save("house", this.wadmTable.toJson());
+              },
+              child: Text('Save', style: TextStyle(fontSize: 20)),
             ),
           ],
         ),

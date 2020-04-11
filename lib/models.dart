@@ -1,10 +1,22 @@
 import 'package:table_sticky_headers/table_sticky_headers.dart';
+import 'dart:convert';
+
+import 'package:wadm/main.dart';
 
 class Category {
   String title;
   int weight;
 
   Category({this.title, this.weight});
+
+  Category.fromJson(Map<String, dynamic> data)
+    : title = data['title'],
+      weight = data['weight'];
+
+  Map<String, dynamic> toJson() => {
+    'title': this.title,
+    'weight': this.weight,
+  };
 
   bool isDuplicated(Category category) {
     return this.title == category.title;
@@ -16,9 +28,45 @@ class Candidate {
   List<int> scores;
 
   Candidate({this.title, this.scores});
+
+  Candidate.fromJson(Map<String, dynamic> data) 
+    : title = data['title'],
+      scores = data['scores'].cast<int>();
+
+  Map<String, dynamic> toJson() => {
+    'title': this.title,
+    'scores': this.scores,
+  };
 }
 
-const CellDimensions myCellDimensions = CellDimensions(
+class MyCellDimensions extends CellDimensions {
+  final double contentCellWidth;
+  final double contentCellHeight;
+  final double stickyLegendWidth;
+  final double stickyLegendHeight;
+
+  const MyCellDimensions({
+    this.contentCellWidth,
+    this.contentCellHeight,
+    this.stickyLegendWidth,
+    this.stickyLegendHeight,
+  });
+
+  MyCellDimensions.fromJson(Map<String, dynamic> data)
+  : contentCellWidth = data['contentCellWidth'],
+    contentCellHeight = data['contentCellHeight'],
+    stickyLegendWidth = data['stickyLegendWidth'],
+    stickyLegendHeight = data['stickyLegendHeight'];
+
+  Map<String, dynamic> toJson() => {
+    'contentCellWidth': this.contentCellWidth,
+    'contentCellHeight': this.contentCellHeight,
+    'stickyLegendWidth': this.stickyLegendWidth,
+    'stickyLegendHeight': this.stickyLegendHeight,
+  };
+}
+
+const MyCellDimensions myCellDimensions = MyCellDimensions(
   contentCellWidth: 110,
   contentCellHeight: 70,
   stickyLegendWidth: 100,
@@ -28,13 +76,33 @@ const CellDimensions myCellDimensions = CellDimensions(
 class WadmTable {
   List<Candidate> candidates;
   List<Category> categories;
-  CellDimensions cellDimensions;
+  MyCellDimensions cellDimensions;
 
   WadmTable({
     this.candidates,
     this.categories,
     this.cellDimensions = myCellDimensions,
   });
+
+  factory WadmTable.fromJson(Map<String, dynamic> data) {
+    List<dynamic> decodedCandidates = json.decode(data['candidates']);
+    List<Candidate> candidates = decodedCandidates.map((each) => Candidate.fromJson(each)).toList();
+
+    List<dynamic> decodedCategory = json.decode(data['categories']);
+    List<Category> categories = decodedCategory.map((each) => Category.fromJson(each)).toList();
+
+    return WadmTable(
+      candidates: candidates,
+      categories: categories,
+      cellDimensions: MyCellDimensions.fromJson(json.decode(data['cellDimensions']))
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+    'candidates': json.encode(this.candidates),
+    'categories': json.encode(this.categories),
+    'cellDimensions': json.encode(this.cellDimensions),
+  };
 
   void sort() {
     // make list with weight and index
@@ -110,5 +178,9 @@ class WadmTable {
       total += (this.categories[i].weight * candidate.scores[i]);
     }
     return total;
+  }
+
+  bool isEmptyTable() {
+    return this.candidates.length == 0 && this.categories.length == 0;
   }
 }

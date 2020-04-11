@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:table_sticky_headers/table_sticky_headers.dart';
-import './utils.dart';
 import './models.dart';
 import './widgets.dart';
+import './sharedPref.dart';
 
 void main() {
   runApp(
@@ -26,6 +25,7 @@ class MyTable extends StatefulWidget {
 }
 
 class _MyTableState extends State<MyTable> {
+  SharedPref sharedPref = SharedPref();
   WadmTable wadmTable = WadmTable(candidates: [], categories: []);
 
   void addCandidate(String title) {
@@ -38,6 +38,18 @@ class _MyTableState extends State<MyTable> {
       setState(() {
         this.wadmTable.addCandidate(title);
       });
+    }
+  }
+
+  void loadSharedPrefs() async {
+    try {
+      WadmTable _wadmTable = WadmTable.fromJson(await sharedPref.read("house"));
+      print('loaded!!');
+      setState(() {
+        wadmTable = _wadmTable;
+      });
+    } catch (e) {
+      print(e);
     }
   }
 
@@ -66,6 +78,10 @@ class _MyTableState extends State<MyTable> {
 
   @override
   Widget build(BuildContext context) {
+    // TODO: When to load table?
+    if (this.wadmTable.isEmptyTable()) {
+      loadSharedPrefs();
+    }
     return Scaffold(
       appBar: AppBar(
         title: Text('Go Sardine - WADM'),
@@ -133,6 +149,7 @@ class _MyTableState extends State<MyTable> {
               content: FloatingActionWidget(
                 addCategory: addCategory,
                 addCandidate: addCandidate,
+                wadmTable: this.wadmTable,
               ),
             ),
           );
