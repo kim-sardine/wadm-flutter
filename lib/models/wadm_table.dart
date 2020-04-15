@@ -1,70 +1,8 @@
-import 'package:table_sticky_headers/table_sticky_headers.dart';
 import 'dart:convert';
 
-import 'package:wadm/main.dart';
-
-class Category {
-  String title;
-  int weight;
-
-  Category({this.title, this.weight});
-
-  Category.fromJson(Map<String, dynamic> data)
-    : title = data['title'],
-      weight = data['weight'];
-
-  Map<String, dynamic> toJson() => {
-    'title': this.title,
-    'weight': this.weight,
-  };
-
-  bool isDuplicated(Category category) {
-    return this.title == category.title;
-  }
-}
-
-class Candidate {
-  String title;
-  List<int> scores;
-
-  Candidate({this.title, this.scores});
-
-  Candidate.fromJson(Map<String, dynamic> data) 
-    : title = data['title'],
-      scores = data['scores'].cast<int>();
-
-  Map<String, dynamic> toJson() => {
-    'title': this.title,
-    'scores': this.scores,
-  };
-}
-
-class MyCellDimensions extends CellDimensions {
-  final double contentCellWidth;
-  final double contentCellHeight;
-  final double stickyLegendWidth;
-  final double stickyLegendHeight;
-
-  const MyCellDimensions({
-    this.contentCellWidth,
-    this.contentCellHeight,
-    this.stickyLegendWidth,
-    this.stickyLegendHeight,
-  });
-
-  MyCellDimensions.fromJson(Map<String, dynamic> data)
-  : contentCellWidth = data['contentCellWidth'],
-    contentCellHeight = data['contentCellHeight'],
-    stickyLegendWidth = data['stickyLegendWidth'],
-    stickyLegendHeight = data['stickyLegendHeight'];
-
-  Map<String, dynamic> toJson() => {
-    'contentCellWidth': this.contentCellWidth,
-    'contentCellHeight': this.contentCellHeight,
-    'stickyLegendWidth': this.stickyLegendWidth,
-    'stickyLegendHeight': this.stickyLegendHeight,
-  };
-}
+import './candidate.dart';
+import './category.dart';
+import './my_cell_dimensions.dart';
 
 const MyCellDimensions myCellDimensions = MyCellDimensions(
   contentCellWidth: 110,
@@ -72,6 +10,7 @@ const MyCellDimensions myCellDimensions = MyCellDimensions(
   stickyLegendWidth: 100,
   stickyLegendHeight: 60,
 );
+
 
 class WadmTable {
   List<Candidate> candidates;
@@ -81,7 +20,12 @@ class WadmTable {
   WadmTable({
     this.candidates,
     this.categories,
-    this.cellDimensions = myCellDimensions,
+    this.cellDimensions = const MyCellDimensions(
+      contentCellWidth: 110,
+      contentCellHeight: 70,
+      stickyLegendWidth: 100,
+      stickyLegendHeight: 60,
+    )
   });
 
   factory WadmTable.fromJson(Map<String, dynamic> data) {

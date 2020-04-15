@@ -1,10 +1,11 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import './utils.dart';
-import './models.dart';
-import './sharedPref.dart';
+
+import '../utils.dart';
+import '../sharedPref.dart';
+import '../models/candidate.dart';
+import '../models/category.dart';
+import '../models/wadm_table.dart';
 
 
 class ScoreFieldWidget extends StatelessWidget {
