@@ -11,6 +11,7 @@ class WadmList extends StatefulWidget {
   _WadmListState createState() => _WadmListState();
 }
 
+// TODO: ListView 로 변환
 class _WadmListState extends State<WadmList> {
   SharedPref sharedPref = SharedPref();
   WadmTable wadmTable = WadmTable(candidates: [], categories: []);
