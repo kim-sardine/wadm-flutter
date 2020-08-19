@@ -1,30 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import './screens/wadm_list.dart';
+import './screens/wadm_list_screen.dart';
+import './screens/wadm_detail_screen.dart';
+import './providers/wadms.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: WadmList(),
-      theme: ThemeData(
-        primarySwatch: Colors.pink,
-        accentColor: Colors.amber,
-        canvasColor: Color.fromRGBO(255, 254, 229, 1),
-        textTheme: ThemeData.light().textTheme.copyWith(
-              body1: TextStyle(
-                color: Color.fromRGBO(20, 51, 51, 1),
-              ),
-              body2: TextStyle(
-                color: Color.fromRGBO(20, 51, 51, 1),
-              ),
-              title: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+    return ChangeNotifierProvider(
+      create: (ctx) => Wadms(),
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.purple, // TODO: Please... Change the color
+          accentColor: Colors.deepOrange,
+          fontFamily: 'Lato',
+        ),
+        home: WadmListScreen(),
+        routes: {
+          WadmListScreen.routeName: (ctx) => WadmListScreen(),
+          WadmDetailScreen.routeName: (ctx) => WadmDetailScreen(),
+        },
       ),
     );
   }
