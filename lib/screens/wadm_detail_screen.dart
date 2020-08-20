@@ -18,12 +18,24 @@ class WadmDetailScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Wadm Detail'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.add),
+            tooltip: 'wadm action',
+            onPressed: () => {},
+          )
+        ],
       ),
       body: Container(
         height: 100,
         color: Colors.amber[100],
         child: Center(child: Text('${wadm.title}')),
-      )
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.save),
+        tooltip: 'Save',
+        onPressed: () => {},
+      ),
     );
   }
 }

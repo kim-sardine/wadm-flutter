@@ -15,7 +15,16 @@ class WadmListScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Wadm List'),
+        title: Text('WADM!'),
+        actions: [
+          IconButton(
+            icon: Icon(
+              Icons.add
+            ),
+            tooltip: 'Create New wadm',
+            onPressed: () => {},
+          )
+        ],
       ),
       body: ListView.separated(
         padding: const EdgeInsets.all(8),

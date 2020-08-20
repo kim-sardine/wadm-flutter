@@ -1,8 +1,10 @@
 
-import 'candidate.dart';
-import 'category.dart';
-
+import 'dart:convert';
 import 'package:uuid/uuid.dart';
+
+import './candidate.dart';
+import './category.dart';
+
 
 class Wadm {
   String id;
@@ -17,6 +19,21 @@ class Wadm {
     this.title = title;
     this.candidates = candidates;
     this.categories = categories;
+  }
+
+  factory Wadm.fromJson(Map<String, dynamic> wadm) {
+    // List<dynamic> decodedCandidates = json.decode(wadm['candidates']);
+    List<Candidate> candidates = wadm['candidates'].map<Candidate>((each) => Candidate.fromJson(each)).toList();
+
+    // List<dynamic> decodedCategory = json.decode(wadm['categories']);
+    List<Category> categories = wadm['categories'].map<Category>((each) => Category.fromJson(each)).toList();
+
+    return Wadm(
+      id: wadm['id'],
+      title: wadm['title'],
+      candidates: candidates,
+      categories: categories,
+    );
   }
 
   void sort() {

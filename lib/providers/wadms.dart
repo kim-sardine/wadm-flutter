@@ -2,15 +2,21 @@
 import 'package:flutter/material.dart';
 
 import '../models/wadm.dart';
+import '../sharedPref.dart';
 
 class Wadms with ChangeNotifier {
-  List<Wadm> _wadms = [
-    Wadm(
-      title: 'First Wadm!',
-      candidates: [],
-      categories: [],
-    ),
-  ];
+
+  List<Wadm> _wadms = [];
+  SharedPref sharedPref = SharedPref();
+
+  Wadms() {
+    setup();
+  }
+
+  void setup() async {
+    _wadms = await sharedPref.loadWadms();
+    notifyListeners();
+  }
 
   List<Wadm> get wadms {
     return [..._wadms];
