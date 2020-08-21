@@ -35,6 +35,18 @@ class Wadms with ChangeNotifier {
   }
 
   void updateWadm(id, wadm) {
+    _wadms = _wadms.map<Wadm>((_wadm) {
+      if (wadm.id == id) {
+        return wadm;
+      }
+      return _wadm;
+    }).toList();
+
+    saveWadms();
     notifyListeners();
+  }
+
+  void saveWadms() async {
+    await sharedPref.saveWadms(_wadms);
   }
 }

@@ -4,30 +4,24 @@ import 'dart:convert';
 
 import './models/wadm.dart';
 
+const WADMS_KEY = "wadms";
+
 class SharedPref {
+
   loadWadms() async {
     final prefs = await SharedPreferences.getInstance();
+    final _wadms = prefs.getString(WADMS_KEY);
 
-    //////////////
-    final value = [
-      {
-        "id": "wadm id",
-        "title": "wadm title",
-        "candidates": [],
-        "categories": []
-      }
-    ];
-    prefs.remove('wadms');
-    prefs.setString('wadms', json.encode(value));
-    //////////////
-
-    final _wadms = prefs.getString('wadms');
     if (_wadms != null) {
       final wadmsJson = json.decode(_wadms);
       final wadms = wadmsJson.map<Wadm>((wadm) => Wadm.fromJson(wadm)).toList();
       return wadms;
     }
     return [];
+  }
+
+  saveWadms(wadms) async {
+    await save(WADMS_KEY, wadms);
   }
 
   read(String key) async {

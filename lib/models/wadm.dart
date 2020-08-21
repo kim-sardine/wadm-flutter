@@ -22,11 +22,11 @@ class Wadm {
   }
 
   factory Wadm.fromJson(Map<String, dynamic> wadm) {
-    // List<dynamic> decodedCandidates = json.decode(wadm['candidates']);
-    List<Candidate> candidates = wadm['candidates'].map<Candidate>((each) => Candidate.fromJson(each)).toList();
+    List<dynamic> decodedCandidates = json.decode(wadm['candidates']);
+    List<Candidate> candidates = decodedCandidates.map<Candidate>((each) => Candidate.fromJson(each)).toList();
 
-    // List<dynamic> decodedCategory = json.decode(wadm['categories']);
-    List<Category> categories = wadm['categories'].map<Category>((each) => Category.fromJson(each)).toList();
+    List<dynamic> decodedCategory = json.decode(wadm['categories']);
+    List<Category> categories = decodedCategory.map<Category>((each) => Category.fromJson(each)).toList();
 
     return Wadm(
       id: wadm['id'],
@@ -35,6 +35,13 @@ class Wadm {
       categories: categories,
     );
   }
+
+  Map<String, dynamic> toJson() => {
+    'id': this.id,
+    'title': this.title,
+    'candidates': json.encode(this.candidates),
+    'categories': json.encode(this.categories),
+  };
 
   void sort() {
     // make list with weight and index

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/wadms.dart';
+import '../widgets/wadm_detail_table.dart';
+import '../widgets/wadm_detail_alert_modal.dart';
 
 class WadmDetailScreen extends StatelessWidget {
 
@@ -10,10 +12,10 @@ class WadmDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final String wadmId = ModalRoute.of(context).settings.arguments;
-    final wadm = Provider.of<Wadms>(
-      context,
-      listen: false,
-    ).findById(wadmId);
+    // final wadm = Provider.of<Wadms>(
+    //   context,
+    //   listen: false,
+    // ).findById(wadmId);
 
     return Scaffold(
       appBar: AppBar(
@@ -26,11 +28,7 @@ class WadmDetailScreen extends StatelessWidget {
           )
         ],
       ),
-      body: Container(
-        height: 100,
-        color: Colors.amber[100],
-        child: Center(child: Text('${wadm.title}')),
-      ),
+      body: WadmTable(wadmId: wadmId),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.save),
         tooltip: 'Save',

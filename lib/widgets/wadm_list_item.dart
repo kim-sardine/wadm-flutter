@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:wadm/models/wadm.dart';
+
+import '../models/wadm.dart';
 
 class WadmListItem extends StatelessWidget {
   final Wadm wadm;
