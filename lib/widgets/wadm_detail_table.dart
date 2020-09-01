@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:table_sticky_headers/table_sticky_headers.dart';
 import 'package:provider/provider.dart';
-import 'package:wadm/models/wadm.dart';
 
 import '../providers/wadms.dart';
 import '../models/my_cell_dimensions.dart';
@@ -21,50 +20,12 @@ class WadmTable extends StatelessWidget {
 
   WadmTable({this.wadmId});
 
-  // void addCandidate(String title) {
-  //   if (wadm.candidateTitleExists(title)) {
-  //     // TODO: Show warning message
-  //     print("exists!!");
-  //     print(title);
-  //     return;
-  //   } else {
-  //     wadm.addCandidate(title);
-  //   }
-  // }
-
-  // void addCategory(String title, int weight) {
-  //   Category newCategory = Category(title: title, weight: weight);
-
-  //   for (Category registeredCategory in wadm.categories) {
-  //     if (registeredCategory.isDuplicated(newCategory)) {
-  //       // TODO: Show warning message
-  //       print("exists!!");
-  //       print(newCategory.title);
-  //       return;
-  //     }
-  //   }
-
-  //   setState(() {
-  //     wadm.addCategory(newCategory);
-  //   });
-  // }
-
-  // void setScore(int rowIdx, int colIdx, int score) {
-  //   setState(() {
-  //     wadm.candidates[colIdx].scores[rowIdx] = score;
-  //   });
-  // }
-
-  void t(int a, int b, int c) {
-
-  }
 
   @override
   Widget build(BuildContext context) {
     final wadm = Provider.of<Wadms>(
       context,
     ).findById(wadmId);
-    print('rebuild');
 
     return StickyHeadersTable(
       cellDimensions: cellDimensions,

@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import '../providers/wadms.dart';
 import '../widgets/wadm_detail_table.dart';
-import '../widgets/wadm_detail_alert_modal.dart';
 
 class WadmDetailScreen extends StatelessWidget {
 
@@ -12,10 +9,6 @@ class WadmDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final String wadmId = ModalRoute.of(context).settings.arguments;
-    // final wadm = Provider.of<Wadms>(
-    //   context,
-    //   listen: false,
-    // ).findById(wadmId);
 
     return Scaffold(
       appBar: AppBar(

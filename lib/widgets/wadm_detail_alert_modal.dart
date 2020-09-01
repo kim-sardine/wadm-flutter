@@ -2,22 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../utils.dart';
-import '../sharedPref.dart';
-import '../models/wadm_table.dart';
 
 class FloatingActionWidget extends StatelessWidget {
-  // final void Function(String) addCandidate;
-  // final void Function(String, int) addCategory;
-  // final WadmTable wadmTable;
-
-  // FloatingActionWidget({this.addCandidate, this.addCategory, this.wadmTable});
 
   @override
   Widget build(BuildContext context) {
     final candidateController = TextEditingController();
     final categoryTitleController = TextEditingController();
     final catetoryWeightController = TextEditingController();
-    SharedPref sharedPref = SharedPref();
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -115,8 +107,6 @@ class FloatingActionWidget extends StatelessWidget {
           children: <Widget>[
             RaisedButton(
               onPressed: () {
-                // print(this.wadmTable.toJson());
-                // sharedPref.save("house", this.wadmTable.toJson());
               },
               child: Text('Save', style: TextStyle(fontSize: 20)),
             ),
