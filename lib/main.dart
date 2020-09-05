@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (ctx) => Wadms(),
       child: MaterialApp(
-        title: 'Flutter Demo',
+        title: 'WADM',
         theme: ThemeData(
           primarySwatch: Colors.purple, // TODO: Please... Change the color
           accentColor: Colors.deepOrange,

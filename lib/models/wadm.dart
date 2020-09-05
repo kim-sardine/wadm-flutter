@@ -9,14 +9,30 @@ import './category.dart';
 class Wadm {
   String id;
   String title;
+  DateTime createdAt;
+  DateTime updatedAt;
   List<Candidate> candidates;
   List<Category> categories;
 
-  Wadm({String id, String title, List<Candidate> candidates, List<Category> categories}) {
-    if (id == null) { // TODO: Need to check if it work
-      this.id = Uuid().v1();  
+  Wadm({String id, String title, DateTime createdAt,
+      DateTime updatedAt, List<Candidate> candidates, List<Category> categories}) {
+
+    if (id == null) {
+      id = Uuid().v1();
     }
+
+    var now = new DateTime.now();
+    if (createdAt == null) {
+      createdAt = now;
+    }
+    if (updatedAt == null) {
+      updatedAt = now;
+    }
+
+    this.id = id;
     this.title = title;
+    this.createdAt = createdAt;
+    this.updatedAt = updatedAt;
     this.candidates = candidates;
     this.categories = categories;
   }
@@ -31,6 +47,8 @@ class Wadm {
     return Wadm(
       id: wadm['id'],
       title: wadm['title'],
+      createdAt: new DateTime.now(),
+      updatedAt: new DateTime.now(),
       candidates: candidates,
       categories: categories,
     );
@@ -39,6 +57,8 @@ class Wadm {
   Map<String, dynamic> toJson() => {
     'id': this.id,
     'title': this.title,
+    'createdAt': this.createdAt.toString(),
+    'updatedAt': this.updatedAt.toString(),
     'candidates': json.encode(this.candidates),
     'categories': json.encode(this.categories),
   };

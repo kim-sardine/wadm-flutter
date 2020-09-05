@@ -14,7 +14,6 @@ class ScoreFieldWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final wadmsProvider = context.watch<Wadms>();
     final wadmsProvider = Provider.of<Wadms>(context, listen: false);
     final wadm = wadmsProvider.findById(wadmId);
     final cellValue = wadm.candidates[colIdx].scores[rowIdx];
@@ -25,7 +24,7 @@ class ScoreFieldWidget extends StatelessWidget {
         print('colIdx : ' + this.colIdx.toString());
         print('changed ' + value);
         wadm.candidates[colIdx].scores[rowIdx] = int.parse(value);
-        wadmsProvider.updateWadm(wadmId, wadm);
+        wadmsProvider.updateWadm(wadm);
       },
       controller: TextEditingController(text: cellValue.toString()),
       decoration: InputDecoration(labelText: "점수 (1~10)"),

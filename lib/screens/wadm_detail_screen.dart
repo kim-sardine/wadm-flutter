@@ -21,12 +21,7 @@ class WadmDetailScreen extends StatelessWidget {
           )
         ],
       ),
-      body: WadmTable(wadmId: wadmId),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.save),
-        tooltip: 'Save',
-        onPressed: () => {},
-      ),
+      body: WadmTable(wadmId: wadmId)
     );
   }
 }

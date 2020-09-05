@@ -34,10 +34,11 @@ class Wadms with ChangeNotifier {
     notifyListeners();
   }
 
-  void updateWadm(id, wadm) {
+  void updateWadm(Wadm newWadm) {
     _wadms = _wadms.map<Wadm>((_wadm) {
-      if (wadm.id == id) {
-        return wadm;
+      if (_wadm.id == newWadm.id) {
+        newWadm.updatedAt = new DateTime.now();
+        return newWadm;
       }
       return _wadm;
     }).toList();
