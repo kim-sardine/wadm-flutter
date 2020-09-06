@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../widgets/wadm_detail_table.dart';
+import '../widgets/wadm_detail_action_dialog.dart';
 
 class WadmDetailScreen extends StatelessWidget {
 
@@ -17,7 +18,14 @@ class WadmDetailScreen extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.add),
             tooltip: 'wadm action',
-            onPressed: () => {},
+            onPressed: () => {
+              showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  content: DetailActionDialogWidget(wadmId: wadmId, detailScreenRouteName: routeName,),
+                ),
+              )
+            },
           )
         ],
       ),

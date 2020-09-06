@@ -116,7 +116,7 @@ class Wadm {
   void addCandidate(String title) {
     Candidate newCandidate = Candidate(
         title: title,
-        scores: List<int>.filled(this.categories.length, 0, growable: true));
+        scores: List<int>.filled(this.categories.length, 1, growable: true));
     this.candidates.add(newCandidate);
   }
 

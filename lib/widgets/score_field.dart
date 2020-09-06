@@ -20,14 +20,12 @@ class ScoreFieldWidget extends StatelessWidget {
 
     return TextField(
       onChanged: (value) {
-        print('rowIdx : ' + this.rowIdx.toString());
-        print('colIdx : ' + this.colIdx.toString());
-        print('changed ' + value);
+        print('Score changed ' + value);
         wadm.candidates[colIdx].scores[rowIdx] = int.parse(value);
         wadmsProvider.updateWadm(wadm);
       },
       controller: TextEditingController(text: cellValue.toString()),
-      decoration: InputDecoration(labelText: "점수 (1~10)"),
+      decoration: InputDecoration(labelText: "Score (1~10)"),
       keyboardType: TextInputType.number,
       inputFormatters: <TextInputFormatter>[
         WhitelistingTextInputFormatter.digitsOnly,

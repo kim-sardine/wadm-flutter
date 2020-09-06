@@ -1,15 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
+import '../providers/wadms.dart';
+import '../models/category.dart';
 import '../utils.dart';
 
-class FloatingActionWidget extends StatelessWidget {
+class DetailActionDialogWidget extends StatelessWidget {
+  final String wadmId;
+  final String detailScreenRouteName;
+
+  DetailActionDialogWidget({this.wadmId, this.detailScreenRouteName});
 
   @override
   Widget build(BuildContext context) {
     final candidateController = TextEditingController();
     final categoryTitleController = TextEditingController();
     final catetoryWeightController = TextEditingController();
+
+    final wadmsProvider = Provider.of<Wadms>(context, listen: false);
+    final wadm = wadmsProvider.findById(wadmId);
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -54,15 +64,17 @@ class FloatingActionWidget extends StatelessWidget {
                         RaisedButton(
                           child: Text('항목 추가'),
                           onPressed: () {
-                            // addCategory(
-                            //   categoryTitleController.text,
-                            //   int.parse(
-                            //       catetoryWeightController.text),
-                            // );
-                            // categoryTitleController.clear();
-                            // catetoryWeightController.clear();
+                            wadm.addCategory(
+                              Category(
+                                title: categoryTitleController.text,
+                                weight: int.parse(catetoryWeightController.text),
+                              )
+                            );
+                            wadmsProvider.updateWadm(wadm);
+                            categoryTitleController.clear();
+                            catetoryWeightController.clear();
                             Navigator.of(context)
-                                .popUntil((route) => route.isFirst);
+                                .popUntil(ModalRoute.withName(this.detailScreenRouteName));
                           },
                         ),
                       ],
@@ -88,10 +100,11 @@ class FloatingActionWidget extends StatelessWidget {
                         RaisedButton(
                           child: Text('항목 추가'),
                           onPressed: () {
-                            // addCandidate(candidateController.text);
-                            // candidateController.clear();
+                            wadm.addCandidate(candidateController.text);
+                            wadmsProvider.updateWadm(wadm);
+                            candidateController.clear();
                             Navigator.of(context)
-                                .popUntil((route) => route.isFirst);
+                                .popUntil(ModalRoute.withName(this.detailScreenRouteName));
                           },
                         ),
                       ],
@@ -99,16 +112,6 @@ class FloatingActionWidget extends StatelessWidget {
                   ),
                 );
               },
-            ),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            RaisedButton(
-              onPressed: () {
-              },
-              child: Text('Save', style: TextStyle(fontSize: 20)),
             ),
           ],
         ),

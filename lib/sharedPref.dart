@@ -22,6 +22,7 @@ class SharedPref {
   }
 
   saveWadms(wadms) async {
+    print('saved!!');
     await save(WADMS_KEY, wadms);
   }
 

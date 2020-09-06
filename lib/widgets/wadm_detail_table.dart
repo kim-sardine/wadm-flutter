@@ -20,7 +20,6 @@ class WadmTable extends StatelessWidget {
 
   WadmTable({this.wadmId});
 
-
   @override
   Widget build(BuildContext context) {
     final wadm = Provider.of<Wadms>(
@@ -47,7 +46,7 @@ class WadmTable extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text('총합'),
+                Text('Total'),
               ],
             ),
           );
