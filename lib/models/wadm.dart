@@ -1,40 +1,67 @@
-import 'package:table_sticky_headers/table_sticky_headers.dart';
 
-class Category {
+import 'dart:convert';
+import 'package:uuid/uuid.dart';
+
+import './candidate.dart';
+import './category.dart';
+
+
+class Wadm {
+  String id;
   String title;
-  int weight;
-
-  Category({this.title, this.weight});
-
-  bool isDuplicated(Category category) {
-    return this.title == category.title;
-  }
-}
-
-class Candidate {
-  String title;
-  List<int> scores;
-
-  Candidate({this.title, this.scores});
-}
-
-const CellDimensions myCellDimensions = CellDimensions(
-  contentCellWidth: 110,
-  contentCellHeight: 70,
-  stickyLegendWidth: 100,
-  stickyLegendHeight: 60,
-);
-
-class WadmTable {
+  DateTime createdAt;
+  DateTime updatedAt;
   List<Candidate> candidates;
   List<Category> categories;
-  CellDimensions cellDimensions;
 
-  WadmTable({
-    this.candidates,
-    this.categories,
-    this.cellDimensions = myCellDimensions,
-  });
+  Wadm({String id, String title, DateTime createdAt,
+      DateTime updatedAt, List<Candidate> candidates, List<Category> categories}) {
+
+    if (id == null) {
+      id = Uuid().v1();
+    }
+
+    var now = new DateTime.now();
+    if (createdAt == null) {
+      createdAt = now;
+    }
+    if (updatedAt == null) {
+      updatedAt = now;
+    }
+
+    this.id = id;
+    this.title = title;
+    this.createdAt = createdAt;
+    this.updatedAt = updatedAt;
+    this.candidates = candidates;
+    this.categories = categories;
+  }
+
+  factory Wadm.fromJson(Map<String, dynamic> wadm) {
+    List<dynamic> decodedCandidates = json.decode(wadm['candidates']);
+    List<Candidate> candidates = decodedCandidates.map<Candidate>((each) => Candidate.fromJson(each)).toList();
+
+    List<dynamic> decodedCategory = json.decode(wadm['categories']);
+    List<Category> categories = decodedCategory.map<Category>((each) => Category.fromJson(each)).toList();
+
+    return Wadm(
+      id: wadm['id'],
+      title: wadm['title'],
+      createdAt: new DateTime.now(),
+      updatedAt: new DateTime.now(),
+      candidates: candidates,
+      categories: categories,
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+    'id': this.id,
+    'title': this.title,
+    'createdAt': this.createdAt.toString(),
+    'updatedAt': this.updatedAt.toString(),
+    'candidates': json.encode(this.candidates),
+    'categories': json.encode(this.categories),
+  };
 
   void sort() {
     // make list with weight and index
@@ -89,7 +116,7 @@ class WadmTable {
   void addCandidate(String title) {
     Candidate newCandidate = Candidate(
         title: title,
-        scores: List<int>.filled(this.categories.length, 0, growable: true));
+        scores: List<int>.filled(this.categories.length, 1, growable: true));
     this.candidates.add(newCandidate);
   }
 
@@ -110,5 +137,9 @@ class WadmTable {
       total += (this.categories[i].weight * candidate.scores[i]);
     }
     return total;
+  }
+
+  bool isEmptyTable() {
+    return this.candidates.length == 0 && this.categories.length == 0;
   }
 }
