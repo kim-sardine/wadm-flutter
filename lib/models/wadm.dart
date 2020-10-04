@@ -163,9 +163,11 @@ class Wadm {
   }
 
   void removeCategory(String categoryId) {
+    // TODO: Implementation
   }
 
   void updateCategory(String categoryId ,String title, int weight) {
+    // TODO: Implementation
   }
 
   int getTotal(int colIdx) {
