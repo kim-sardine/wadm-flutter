@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
 import '../models/candidate.dart';
+import '../widgets/wadm_detail_candidate_modifing.dart';
 
 class CandidateFieldWidget extends StatelessWidget {
+  final String wadmId;
   final Candidate candidate;
 
-  CandidateFieldWidget({this.candidate});
+  CandidateFieldWidget({this.wadmId, this.candidate});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +16,15 @@ class CandidateFieldWidget extends StatelessWidget {
       textColor: Colors.white,
       padding: EdgeInsets.all(4.0),
       onPressed: () {
-        /* 내용 수정 기능 추가 */
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            content: CandidateModifingWidget(
+              wadmId: wadmId,
+              candidate: candidate,
+            ),
+          ),
+        );
       },
       child: Text(
         this.candidate.title,

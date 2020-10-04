@@ -64,13 +64,9 @@ class DetailActionDialogWidget extends StatelessWidget {
                         RaisedButton(
                           child: Text('항목 추가'),
                           onPressed: () {
-                            wadm.addCategory(
-                              Category(
-                                title: categoryTitleController.text,
-                                weight: int.parse(catetoryWeightController.text),
-                              )
-                            );
+                            wadm.addCategory(categoryTitleController.text, int.parse(catetoryWeightController.text));
                             wadmsProvider.updateWadm(wadm);
+
                             categoryTitleController.clear();
                             catetoryWeightController.clear();
                             Navigator.of(context)

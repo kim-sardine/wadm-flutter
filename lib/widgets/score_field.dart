@@ -20,7 +20,6 @@ class ScoreFieldWidget extends StatelessWidget {
 
     return TextField(
       onChanged: (value) {
-        print('Score changed ' + value);
         wadm.candidates[colIdx].scores[rowIdx] = int.parse(value);
         wadmsProvider.updateWadm(wadm);
       },

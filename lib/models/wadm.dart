@@ -1,10 +1,8 @@
-
 import 'dart:convert';
 import 'package:uuid/uuid.dart';
 
 import './candidate.dart';
 import './category.dart';
-
 
 class Wadm {
   String id;
@@ -14,11 +12,15 @@ class Wadm {
   List<Candidate> candidates;
   List<Category> categories;
 
-  Wadm({String id, String title, DateTime createdAt,
-      DateTime updatedAt, List<Candidate> candidates, List<Category> categories}) {
-
+  Wadm(
+      {String id,
+      String title,
+      DateTime createdAt,
+      DateTime updatedAt,
+      List<Candidate> candidates,
+      List<Category> categories}) {
     if (id == null) {
-      id = Uuid().v1();
+      id = generateUuid();
     }
 
     var now = new DateTime.now();
@@ -39,10 +41,14 @@ class Wadm {
 
   factory Wadm.fromJson(Map<String, dynamic> wadm) {
     List<dynamic> decodedCandidates = json.decode(wadm['candidates']);
-    List<Candidate> candidates = decodedCandidates.map<Candidate>((each) => Candidate.fromJson(each)).toList();
+    List<Candidate> candidates = decodedCandidates
+        .map<Candidate>((each) => Candidate.fromJson(each))
+        .toList();
 
     List<dynamic> decodedCategory = json.decode(wadm['categories']);
-    List<Category> categories = decodedCategory.map<Category>((each) => Category.fromJson(each)).toList();
+    List<Category> categories = decodedCategory
+        .map<Category>((each) => Category.fromJson(each))
+        .toList();
 
     return Wadm(
       id: wadm['id'],
@@ -55,13 +61,13 @@ class Wadm {
   }
 
   Map<String, dynamic> toJson() => {
-    'id': this.id,
-    'title': this.title,
-    'createdAt': this.createdAt.toString(),
-    'updatedAt': this.updatedAt.toString(),
-    'candidates': json.encode(this.candidates),
-    'categories': json.encode(this.categories),
-  };
+        'id': this.id,
+        'title': this.title,
+        'createdAt': this.createdAt.toString(),
+        'updatedAt': this.updatedAt.toString(),
+        'candidates': json.encode(this.candidates),
+        'categories': json.encode(this.categories),
+      };
 
   void sort() {
     // make list with weight and index
@@ -104,6 +110,10 @@ class Wadm {
     print('sorted!!');
   }
 
+  String generateUuid() {
+    return Uuid().v1();
+  }
+
   bool candidateTitleExists(String title) {
     for (var candidate in this.candidates) {
       if (candidate.title == title) {
@@ -114,13 +124,37 @@ class Wadm {
   }
 
   void addCandidate(String title) {
+    final candidateId = generateUuid();
+
     Candidate newCandidate = Candidate(
+        id: candidateId,
         title: title,
         scores: List<int>.filled(this.categories.length, 1, growable: true));
     this.candidates.add(newCandidate);
   }
 
-  void addCategory(Category category) {
+  void removeCandidate(String candidateId) {
+    this.candidates.removeWhere((candidate) => candidate.id == candidateId);
+  }
+
+  void updateCandidate(String candidateId ,String title) {
+    for (var candidate in this.candidates) {
+      if (candidate.id == candidateId) {
+        candidate.title = title;
+        break;
+      }
+    }
+  }
+
+  void addCategory(String title, int weight) {
+    final categoryId = generateUuid();
+
+    final category = Category(
+      id: categoryId,
+      title: title,
+      weight: weight,
+    );
+
     this.categories.add(category);
     for (var candidate in this.candidates) {
       candidate.scores.add(1);
