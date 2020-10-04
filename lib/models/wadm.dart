@@ -162,6 +162,12 @@ class Wadm {
     this.sort();
   }
 
+  void removeCategory(String categoryId) {
+  }
+
+  void updateCategory(String categoryId ,String title, int weight) {
+  }
+
   int getTotal(int colIdx) {
     // total = candidate's score * category's weight
     int total = 0;

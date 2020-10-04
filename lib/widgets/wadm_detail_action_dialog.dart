@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/wadms.dart';
-import '../models/category.dart';
 import '../utils.dart';
 
 class DetailActionDialogWidget extends StatelessWidget {
@@ -56,10 +55,7 @@ class DetailActionDialogWidget extends StatelessWidget {
                           decoration: InputDecoration(
                               labelText: "가중치 (1~10)"),
                           keyboardType: TextInputType.number,
-                          inputFormatters: <TextInputFormatter>[
-                            WhitelistingTextInputFormatter.digitsOnly,
-                            FromOneToTenTextInputFormatter(),
-                          ],
+                          inputFormatters: categoryWeightInputFormatter,
                         ),
                         RaisedButton(
                           child: Text('항목 추가'),

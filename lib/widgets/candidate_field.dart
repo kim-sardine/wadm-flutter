@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../models/candidate.dart';
-import '../widgets/wadm_detail_candidate_modifing.dart';
+import 'wadm_detail_candidate_modifing_dialog.dart';
 
 class CandidateFieldWidget extends StatelessWidget {
   final String wadmId;
@@ -19,7 +19,7 @@ class CandidateFieldWidget extends StatelessWidget {
         showDialog(
           context: context,
           builder: (context) => AlertDialog(
-            content: CandidateModifingWidget(
+            content: CandidateModifingDialogWidget(
               wadmId: wadmId,
               candidate: candidate,
             ),

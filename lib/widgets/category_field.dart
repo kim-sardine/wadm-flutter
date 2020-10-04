@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
 import '../models/category.dart';
+import '../widgets/wadm_detail_category_modifing_dialog.dart';
 
 class CategoryFieldWidget extends StatelessWidget {
+  final String wadmId;
   final Category category;
 
-  CategoryFieldWidget({this.category});
+  CategoryFieldWidget({this.wadmId, this.category});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +15,15 @@ class CategoryFieldWidget extends StatelessWidget {
       color: Colors.lightGreen,
       textColor: Colors.white,
       onPressed: () {
-        /* 내용 수정 기능 추가 */
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            content: CategoryModifingDialogWidget(
+              wadmId: wadmId,
+              category: category,
+            ),
+          ),
+        );
       },
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,

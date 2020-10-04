@@ -57,7 +57,10 @@ class WadmTable extends StatelessWidget {
         return Container(
           height: cellDimensions.contentCellHeight,
           width: cellDimensions.stickyLegendWidth,
-          child: CategoryFieldWidget(category: wadm.categories[i]),
+          child: CategoryFieldWidget(
+            wadmId: wadmId,
+            category: wadm.categories[i],
+          ),
           margin: EdgeInsets.symmetric(
             vertical: 5,
           ),

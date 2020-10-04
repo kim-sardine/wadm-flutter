@@ -4,11 +4,11 @@ import 'package:provider/provider.dart';
 import '../providers/wadms.dart';
 import '../models/candidate.dart';
 
-class CandidateModifingWidget extends StatelessWidget {
+class CandidateModifingDialogWidget extends StatelessWidget {
   final String wadmId;
   final Candidate candidate;
 
-  CandidateModifingWidget({this.wadmId, this.candidate});
+  CandidateModifingDialogWidget({this.wadmId, this.candidate});
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +31,7 @@ class CandidateModifingWidget extends StatelessWidget {
               child: Text('삭제'),
               color: Colors.deepOrange,
               onPressed: () {
+                // TODO: Confirm once more?
                 wadm.removeCandidate(this.candidate.id);
                 wadmsProvider.updateWadm(wadm);
 
