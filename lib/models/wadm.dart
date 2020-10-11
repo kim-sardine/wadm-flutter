@@ -159,7 +159,6 @@ class Wadm {
     for (var candidate in this.candidates) {
       candidate.scores.add(1);
     }
-    this.sort();
   }
 
   void removeCategory(String categoryId) {
@@ -174,8 +173,15 @@ class Wadm {
     }
   }
 
-  void updateCategory(String categoryId ,String title, int weight) {
-    // TODO: Implementation
+  void updateCategory(String categoryId, String title, int weight) {
+    for (var i = 0; i < this.categories.length; i++) {
+      if (this.categories[i].id == categoryId) {
+        this.categories[i].title = title;
+        this.categories[i].weight = weight;
+        this.sort();
+        break;
+      }
+    }
   }
 
   int getTotal(int colIdx) {
