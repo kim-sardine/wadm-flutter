@@ -163,7 +163,15 @@ class Wadm {
   }
 
   void removeCategory(String categoryId) {
-    // TODO: Implementation
+    for (var i = 0; i < this.categories.length; i++) {
+      if (this.categories[i].id == categoryId) {
+        this.categories.removeAt(i);
+        for (var candidate in this.candidates) {
+          candidate.scores.removeAt(i);
+        }
+        break;
+      }
+    }
   }
 
   void updateCategory(String categoryId ,String title, int weight) {
