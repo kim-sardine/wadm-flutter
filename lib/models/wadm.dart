@@ -123,6 +123,10 @@ class Wadm {
     return false;
   }
 
+  void updateTitle(String title) {
+    this.title = title;
+  }
+
   void addCandidate(String title) {
     final candidateId = generateUuid();
 
@@ -159,6 +163,8 @@ class Wadm {
     for (var candidate in this.candidates) {
       candidate.scores.add(1);
     }
+
+    this.sort();
   }
 
   void removeCategory(String categoryId) {

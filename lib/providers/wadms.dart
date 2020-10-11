@@ -1,11 +1,9 @@
-
 import 'package:flutter/material.dart';
 
 import '../models/wadm.dart';
 import '../sharedPref.dart';
 
 class Wadms with ChangeNotifier {
-
   List<Wadm> _wadms = [];
   SharedPref sharedPref = SharedPref();
 
@@ -26,11 +24,16 @@ class Wadms with ChangeNotifier {
     return _wadms.firstWhere((wadm) => wadm.id == id);
   }
 
-  void addNewWadm(id, title) {
+  void addNewWadm(title) {
+    Wadm wadm = Wadm(title: title, candidates: [], categories: []);
+    _wadms.add(wadm);
+
+    saveWadms();
     notifyListeners();
   }
 
-  void renameWadm(id, title) {
+  void removeWadm(id) {
+    _wadms.removeWhere((wadm) => wadm.id == id);
     notifyListeners();
   }
 
