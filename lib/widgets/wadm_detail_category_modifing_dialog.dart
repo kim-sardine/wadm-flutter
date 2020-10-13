@@ -24,15 +24,22 @@ class CategoryModifingDialogWidget extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        TextField(
-          controller: categoryTitleController,
-          decoration: InputDecoration(labelText: "항목명"),
-        ),
-        TextField(
-          controller: catetoryWeightController,
-          decoration: InputDecoration(labelText: "가중치 (1~10)"),
-          keyboardType: TextInputType.number,
-          inputFormatters: categoryWeightInputFormatter,
+        Container(
+          child: Column(
+            children: [
+              TextField(
+                controller: categoryTitleController,
+                decoration: InputDecoration(labelText: "항목명"),
+              ),
+              TextField(
+                controller: catetoryWeightController,
+                decoration: InputDecoration(labelText: "가중치 (1~10)"),
+                keyboardType: TextInputType.number,
+                inputFormatters: categoryWeightInputFormatter,
+              ),
+            ],
+          ),
+          margin: EdgeInsets.only(bottom: 20),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

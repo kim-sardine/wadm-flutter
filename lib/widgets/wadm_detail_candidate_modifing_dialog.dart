@@ -20,9 +20,12 @@ class CandidateModifingDialogWidget extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        TextField(
-          controller: candidateController,
-          decoration: InputDecoration(labelText: "후보명"),
+        Container(
+          child: TextField(
+            controller: candidateController,
+            decoration: InputDecoration(labelText: "후보명"),
+          ),
+          margin: EdgeInsets.only(bottom: 20),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

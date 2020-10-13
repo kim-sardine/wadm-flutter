@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import '../providers/wadms.dart';
 
 class AddNewWadmDialogWidget extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     final wadmsProvider = Provider.of<Wadms>(context, listen: false);
@@ -13,23 +12,21 @@ class AddNewWadmDialogWidget extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        TextField(
-          controller: wadmTitleController,
-          decoration: InputDecoration(labelText: "Title"),
+        Container(
+          child: TextField(
+            controller: wadmTitleController,
+            decoration: InputDecoration(labelText: "Title"),
+          ),
+          margin: EdgeInsets.only(bottom: 20),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            RaisedButton(
-              child: Text('Create'),
-              color: Colors.blue,
-              onPressed: () {
-                wadmsProvider.addNewWadm(wadmTitleController.text);
+        RaisedButton(
+          child: Text('Create'),
+          color: Colors.blue,
+          onPressed: () {
+            wadmsProvider.addNewWadm(wadmTitleController.text);
 
-                Navigator.of(context).pop();
-              },
-            )
-          ],
+            Navigator.of(context).pop();
+          },
         ),
       ],
     );

@@ -18,9 +18,12 @@ class EditDialogWidget extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        TextField(
-          controller: wadmTitleController,
-          decoration: InputDecoration(labelText: "Title"),
+        Container(
+          child: TextField(
+            controller: wadmTitleController,
+            decoration: InputDecoration(labelText: "Title"),
+          ),
+          margin: EdgeInsets.only(bottom: 20),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -31,7 +34,8 @@ class EditDialogWidget extends StatelessWidget {
               onPressed: () {
                 wadmsProvider.removeWadm(wadmId);
 
-                Navigator.of(context).pushNamedAndRemoveUntil('/wadm-list', (route) => false);
+                Navigator.of(context)
+                    .pushNamedAndRemoveUntil('/wadm-list', (route) => false);
               },
             ),
             RaisedButton(
