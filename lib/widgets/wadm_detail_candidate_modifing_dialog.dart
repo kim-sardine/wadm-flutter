@@ -43,7 +43,8 @@ class CandidateModifingDialogWidget extends StatelessWidget {
             ),
             RaisedButton(
               child: Text('수정'),
-              color: Colors.lightGreen,
+              color: Theme.of(context).primaryColor,
+              textColor: Colors.white,
               onPressed: () {
                 // Validation
                 wadm.updateCandidate(

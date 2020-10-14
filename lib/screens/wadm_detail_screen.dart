@@ -17,10 +17,11 @@ class WadmDetailScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(wadm.title),
+        title: Text(wadm.title, style: TextStyle(color: Theme.of(context).accentColor),),
         actions: [
           IconButton(
             icon: Icon(Icons.edit),
+            color: Theme.of(context).accentColor,
             tooltip: 'Edit Wadm',
             onPressed: () => {
               showDialog(
@@ -33,6 +34,7 @@ class WadmDetailScreen extends StatelessWidget {
           ),
           IconButton(
             icon: Icon(Icons.add),
+            color: Theme.of(context).accentColor,
             tooltip: 'Add element',
             onPressed: () => {
               showDialog(

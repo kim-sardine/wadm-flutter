@@ -21,7 +21,8 @@ class AddNewWadmDialogWidget extends StatelessWidget {
         ),
         RaisedButton(
           child: Text('Create'),
-          color: Colors.blue,
+          color: Theme.of(context).primaryColor,
+          textColor: Colors.white,
           onPressed: () {
             wadmsProvider.addNewWadm(wadmTitleController.text);
 

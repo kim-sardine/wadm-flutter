@@ -16,12 +16,13 @@ class WadmListScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('WADM!'),
+        title: Text('wadm!',style: TextStyle(color: Theme.of(context).accentColor),),
         actions: [
           IconButton(
             icon: Icon(
               Icons.add
             ),
+            color: Theme.of(context).accentColor,
             tooltip: 'Create New wadm',
             onPressed: () {
               showDialog(
