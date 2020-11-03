@@ -20,16 +20,16 @@ class ScoreFieldWidget extends StatelessWidget {
 
     return TextField(
       onChanged: (value) {
-        wadm.candidates[colIdx].scores[rowIdx] = int.parse(value);
-        wadmsProvider.updateWadm(wadm);
+        final inputValue = int.parse(value);
+        if (wadm.candidates[colIdx].scores[rowIdx] != inputValue) {
+          wadm.candidates[colIdx].scores[rowIdx] = inputValue;
+          wadmsProvider.updateWadm(wadm);
+        }
       },
       controller: TextEditingController(text: cellValue.toString()),
       decoration: InputDecoration(labelText: "Score (1~10)"),
       keyboardType: TextInputType.number,
-      inputFormatters: <TextInputFormatter>[
-        WhitelistingTextInputFormatter.digitsOnly,
-        FromOneToTenTextInputFormatter(),
-      ],
+      inputFormatters: categoryWeightInputFormatter,
     );
   }
 }
