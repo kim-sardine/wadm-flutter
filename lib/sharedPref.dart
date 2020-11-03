@@ -9,7 +9,7 @@ const WADMS_KEY = "wadms";
 class SharedPref {
 
   // TODO: Sort wadms by 'updated_at'
-  loadWadms() async {
+  Future<List <Wadm>> loadWadms() async {
     final prefs = await SharedPreferences.getInstance();
     final _wadms = prefs.getString(WADMS_KEY);
 

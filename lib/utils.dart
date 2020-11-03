@@ -33,6 +33,6 @@ class FromOneToTenTextInputFormatter extends TextInputFormatter {
 }
 
 List<TextInputFormatter> categoryWeightInputFormatter = <TextInputFormatter>[
-  WhitelistingTextInputFormatter.digitsOnly,
+  FilteringTextInputFormatter.digitsOnly,
   FromOneToTenTextInputFormatter(),
 ];

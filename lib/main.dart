@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'wadm!',
         theme: ThemeData(
-          primaryColor: primaryColor, // TODO: Please... Change the color
+          primaryColor: primaryColor,
           accentColor: accentColor,
           fontFamily: 'Lato',
         ),
