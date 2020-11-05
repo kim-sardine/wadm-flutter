@@ -3,6 +3,7 @@ import 'package:uuid/uuid.dart';
 
 import './candidate.dart';
 import './category.dart';
+import '../utils.dart';
 
 class Wadm {
   String id;
@@ -24,6 +25,7 @@ class Wadm {
     }
 
     var now = new DateTime.now();
+    now = removeMiliMicroSeconds(now);
     if (createdAt == null) {
       createdAt = now;
     }
@@ -53,21 +55,21 @@ class Wadm {
     return Wadm(
       id: wadm['id'],
       title: wadm['title'],
-      createdAt: new DateTime.now(),
-      updatedAt: new DateTime.now(),
+      createdAt: convertStringToDateTime(wadm['createdAt']),
+      updatedAt: convertStringToDateTime(wadm['updatedAt']),
       candidates: candidates,
       categories: categories,
     );
   }
 
   Map<String, dynamic> toJson() => {
-        'id': this.id,
-        'title': this.title,
-        'createdAt': this.createdAt.toString(),
-        'updatedAt': this.updatedAt.toString(),
-        'candidates': json.encode(this.candidates),
-        'categories': json.encode(this.categories),
-      };
+    'id': this.id,
+    'title': this.title,
+    'createdAt': convertDateTimeToString(this.createdAt),
+    'updatedAt': convertDateTimeToString(this.updatedAt),
+    'candidates': json.encode(this.candidates),
+    'categories': json.encode(this.categories),
+  };
 
   void sort() {
     // make list with weight and index

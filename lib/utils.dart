@@ -1,4 +1,5 @@
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 
 
 // 1 ~ 10
@@ -36,3 +37,15 @@ List<TextInputFormatter> categoryWeightInputFormatter = <TextInputFormatter>[
   FilteringTextInputFormatter.digitsOnly,
   FromOneToTenTextInputFormatter(),
 ];
+
+String convertDateTimeToString(DateTime dt) {
+  return DateFormat("yyyy-MM-dd hh:mm:ss").format(dt);
+}
+
+DateTime convertStringToDateTime(String dt) {
+  return new DateFormat("yyyy-MM-dd hh:mm:ss").parse(dt);
+}
+
+DateTime removeMiliMicroSeconds(DateTime dt) {
+  return dt.subtract(new Duration(microseconds: dt.microsecond, milliseconds: dt.millisecond));
+}

@@ -1,3 +1,6 @@
+import 'package:quiver/core.dart';
+import 'package:flutter/foundation.dart';
+
 class Candidate {
   String id;
   String title;
@@ -15,4 +18,7 @@ class Candidate {
     'title': this.title,
     'scores': this.scores,
   };
+
+  bool operator ==(o) => o is Candidate && o.id == id && o.title == title && listEquals(o.scores, scores);
+  int get hashCode => hash3(id.hashCode, title.hashCode, scores.hashCode);
 }
