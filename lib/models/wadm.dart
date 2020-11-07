@@ -20,18 +20,15 @@ class Wadm {
       DateTime updatedAt,
       List<Candidate> candidates,
       List<Category> categories}) {
-    if (id == null) {
-      id = generateUuid();
-    }
+    id ??= generateUuid();
 
-    var now = new DateTime.now();
+    var now = getUtcNow();
     now = removeMiliMicroSeconds(now);
-    if (createdAt == null) {
-      createdAt = now;
-    }
-    if (updatedAt == null) {
-      updatedAt = now;
-    }
+    createdAt ??= now;
+    updatedAt ??= now;
+
+    candidates ??= [];
+    categories ??= [];
 
     this.id = id;
     this.title = title;
@@ -63,16 +60,16 @@ class Wadm {
   }
 
   Map<String, dynamic> toJson() => {
-    'id': this.id,
-    'title': this.title,
-    'createdAt': convertDateTimeToString(this.createdAt),
-    'updatedAt': convertDateTimeToString(this.updatedAt),
-    'candidates': json.encode(this.candidates),
-    'categories': json.encode(this.categories),
-  };
+        'id': this.id,
+        'title': this.title,
+        'createdAt': convertDateTimeToString(this.createdAt),
+        'updatedAt': convertDateTimeToString(this.updatedAt),
+        'candidates': json.encode(this.candidates),
+        'categories': json.encode(this.categories),
+      };
 
-  void sort() {
-    // make list with weight and index
+  // sort by catetory's 1.weight, 2.title
+  void sortCategory() {
     List<Map<String, dynamic>> indexWithWeight = [];
     for (var i = 0; i < this.categories.length; i++) {
       indexWithWeight.add({
@@ -82,7 +79,6 @@ class Wadm {
       });
     }
 
-    // sort by 1.weight, 2.title
     indexWithWeight.sort((a, b) {
       var compare = b["weight"].compareTo(a["weight"]);
       if (compare != 0) {
@@ -91,7 +87,6 @@ class Wadm {
       return a["title"].compareTo(b["title"]);
     });
 
-    // update category
     List<Category> newCategory = [];
     for (var i = 0; i < this.categories.length; i++) {
       int targetIndex = indexWithWeight[i]['index'];
@@ -99,7 +94,7 @@ class Wadm {
     }
     this.categories = newCategory;
 
-    // update candidate's score
+    // sync candidate
     for (var i = 0; i < this.candidates.length; i++) {
       List<int> newScores = [];
       for (var j = 0; j < indexWithWeight.length; j++) {
@@ -108,9 +103,10 @@ class Wadm {
       }
       this.candidates[i].scores = newScores;
     }
-
-    print('sorted!!');
   }
+
+  // TODO: Do we need this? When to call this?
+  void sortCandidate() {}
 
   String generateUuid() {
     return Uuid().v1();
@@ -143,7 +139,7 @@ class Wadm {
     this.candidates.removeWhere((candidate) => candidate.id == candidateId);
   }
 
-  void updateCandidate(String candidateId ,String title) {
+  void updateCandidateTitle(String candidateId, String title) {
     for (var candidate in this.candidates) {
       if (candidate.id == candidateId) {
         candidate.title = title;
@@ -166,7 +162,7 @@ class Wadm {
       candidate.scores.add(1);
     }
 
-    this.sort();
+    this.sortCategory();
   }
 
   void removeCategory(String categoryId) {
@@ -186,16 +182,16 @@ class Wadm {
       if (this.categories[i].id == categoryId) {
         this.categories[i].title = title;
         this.categories[i].weight = weight;
-        this.sort();
+        this.sortCategory();
         break;
       }
     }
   }
 
-  int getTotal(int colIdx) {
+  int getTotal(int candidateIdx) {
     // total = candidate's score * category's weight
     int total = 0;
-    Candidate candidate = this.candidates[colIdx];
+    Candidate candidate = this.candidates[candidateIdx];
 
     for (var i = 0; i < this.categories.length; i++) {
       total += (this.categories[i].weight * candidate.scores[i]);

@@ -47,7 +47,7 @@ class CandidateModifingDialogWidget extends StatelessWidget {
               textColor: Colors.white,
               onPressed: () {
                 // Validation
-                wadm.updateCandidate(
+                wadm.updateCandidateTitle(
                     this.candidate.id, candidateController.text);
                 wadmsProvider.updateWadm(wadm);
 

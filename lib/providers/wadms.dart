@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wadm/utils.dart';
 
 import '../models/wadm.dart';
 import '../sharedPref.dart';
@@ -40,7 +41,7 @@ class Wadms with ChangeNotifier {
   void updateWadm(Wadm newWadm) {
     _wadms = _wadms.map<Wadm>((_wadm) {
       if (_wadm.id == newWadm.id) {
-        newWadm.updatedAt = new DateTime.now();
+        newWadm.updatedAt = getUtcNow();
         return newWadm;
       }
       return _wadm;

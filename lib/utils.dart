@@ -43,9 +43,13 @@ String convertDateTimeToString(DateTime dt) {
 }
 
 DateTime convertStringToDateTime(String dt) {
-  return new DateFormat("yyyy-MM-dd hh:mm:ss").parse(dt);
+  return new DateFormat("yyyy-MM-dd hh:mm:ss").parse(dt, true);
 }
 
 DateTime removeMiliMicroSeconds(DateTime dt) {
   return dt.subtract(new Duration(microseconds: dt.microsecond, milliseconds: dt.millisecond));
+}
+
+DateTime getUtcNow() {
+  return new DateTime.now().toUtc();
 }
