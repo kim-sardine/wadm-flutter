@@ -1,8 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:wadm/utils.dart';
 
 import '../models/wadm.dart';
 import '../sharedPref.dart';
+
+const WADMS_KEY = "wadms";
 
 class Wadms with ChangeNotifier {
   List<Wadm> _wadms = [];
@@ -13,7 +17,11 @@ class Wadms with ChangeNotifier {
   }
 
   void setup() async {
-    _wadms = await sharedPref.loadWadms();
+    String wadmsFromSharedPref = await sharedPref.load(WADMS_KEY);
+    if (wadmsFromSharedPref != null) {
+      final wadmsJson = json.decode(wadmsFromSharedPref);
+      _wadms = wadmsJson.map<Wadm>((wadm) => Wadm.fromJson(wadm)).toList();
+    }
     notifyListeners();
   }
 
@@ -52,6 +60,6 @@ class Wadms with ChangeNotifier {
   }
 
   void saveWadms() async {
-    await sharedPref.saveWadms(_wadms);
+    await sharedPref.save(WADMS_KEY, _wadms);
   }
 }
