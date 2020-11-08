@@ -57,17 +57,21 @@ class DetailActionDialogWidget extends StatelessWidget {
                           keyboardType: TextInputType.number,
                           inputFormatters: categoryWeightInputFormatter,
                         ),
-                        RaisedButton(
-                          child: Text('항목 추가'),
-                          onPressed: () {
-                            wadm.addCategory(categoryTitleController.text, int.parse(catetoryWeightController.text));
-                            wadmsProvider.updateWadm(wadm);
+                        Container( // TODO: into a module
+                          margin: EdgeInsets.only(top: 20),
+                          child: RaisedButton(
+                              child: Text('추가하기'),
+                              color: Colors.lightGreen,
+                              onPressed: () {
+                                wadm.addCategory(categoryTitleController.text, int.parse(catetoryWeightController.text));
+                                wadmsProvider.updateWadm(wadm);
 
-                            categoryTitleController.clear();
-                            catetoryWeightController.clear();
-                            Navigator.of(context)
-                                .popUntil(ModalRoute.withName(this.detailScreenRouteName));
-                          },
+                                categoryTitleController.clear();
+                                catetoryWeightController.clear();
+                                Navigator.of(context)
+                                    .popUntil(ModalRoute.withName(this.detailScreenRouteName));
+                              },
+                            ),
                         ),
                       ],
                     ),
@@ -89,15 +93,19 @@ class DetailActionDialogWidget extends StatelessWidget {
                           decoration:
                               InputDecoration(labelText: "후보명"),
                         ),
-                        RaisedButton(
-                          child: Text('항목 추가'),
-                          onPressed: () {
-                            wadm.addCandidate(candidateController.text);
-                            wadmsProvider.updateWadm(wadm);
-                            candidateController.clear();
-                            Navigator.of(context)
-                                .popUntil(ModalRoute.withName(this.detailScreenRouteName));
-                          },
+                        Container( // TODO: into a module
+                          margin: EdgeInsets.only(top: 20),
+                          child: RaisedButton(
+                            child: Text('추가하기'),
+                            color: Colors.lightGreen,
+                            onPressed: () {
+                              wadm.addCandidate(candidateController.text);
+                              wadmsProvider.updateWadm(wadm);
+                              candidateController.clear();
+                              Navigator.of(context)
+                                  .popUntil(ModalRoute.withName(this.detailScreenRouteName));
+                            },
+                          ),
                         ),
                       ],
                     ),
