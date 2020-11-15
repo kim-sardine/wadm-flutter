@@ -11,14 +11,27 @@ class SharedPref {
     return prefs.getString(key);
   }
 
-  read(String key) async {
-    final prefs = await SharedPreferences.getInstance();
-    return json.decode(prefs.getString(key));
+  dynamic loadJson(String key) async {
+    String prefValue = await this.load(key);
+    Object result;
+
+    try {
+      result = json.decode(prefValue);    
+    } catch (e) {
+      result = null;
+    }
+
+    return result;
   }
 
   save(String key, value) async {
     final prefs = await SharedPreferences.getInstance();
-    prefs.setString(key, json.encode(value));
+    prefs.setString(key, value);
+  }
+
+  saveAsJson(String key, value) async {
+    String jsonValue = json.encode(value);
+    await this.save(key, jsonValue);
   }
 
   remove(String key) async {
