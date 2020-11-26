@@ -60,13 +60,13 @@ class Wadm {
   }
 
   Map<String, dynamic> toJson() => {
-        'id': this.id,
-        'title': this.title,
-        'createdAt': convertDateTimeToString(this.createdAt),
-        'updatedAt': convertDateTimeToString(this.updatedAt),
-        'candidates': json.encode(this.candidates),
-        'categories': json.encode(this.categories),
-      };
+    'id': this.id,
+    'title': this.title,
+    'createdAt': convertDateTimeToString(this.createdAt),
+    'updatedAt': convertDateTimeToString(this.updatedAt),
+    'candidates': json.encode(this.candidates),
+    'categories': json.encode(this.categories),
+  };
 
   // sort by catetory's 1.weight, 2.title
   void sortCategory() {

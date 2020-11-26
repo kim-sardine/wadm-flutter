@@ -39,11 +39,11 @@ List<TextInputFormatter> categoryWeightInputFormatter = <TextInputFormatter>[
 ];
 
 String convertDateTimeToString(DateTime dt) {
-  return DateFormat("yyyy-MM-dd hh:mm:ss").format(dt);
+  return DateFormat("yyyy-MM-dd HH:mm:ss").format(dt);
 }
 
 DateTime convertStringToDateTime(String dt) {
-  return new DateFormat("yyyy-MM-dd hh:mm:ss").parse(dt, true);
+  return new DateFormat("yyyy-MM-dd HH:mm:ss").parse(dt, true);
 }
 
 DateTime removeMiliMicroSeconds(DateTime dt) {
