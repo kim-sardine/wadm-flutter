@@ -1,4 +1,5 @@
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 
 
 // 1 ~ 10
@@ -30,4 +31,25 @@ class FromOneToTenTextInputFormatter extends TextInputFormatter {
 
     return newValue;
   }
+}
+
+List<TextInputFormatter> categoryWeightInputFormatter = <TextInputFormatter>[
+  FilteringTextInputFormatter.digitsOnly,
+  FromOneToTenTextInputFormatter(),
+];
+
+String convertDateTimeToString(DateTime dt) {
+  return DateFormat("yyyy-MM-dd HH:mm:ss").format(dt);
+}
+
+DateTime convertStringToDateTime(String dt) {
+  return new DateFormat("yyyy-MM-dd HH:mm:ss").parse(dt, true);
+}
+
+DateTime removeMiliMicroSeconds(DateTime dt) {
+  return dt.subtract(new Duration(microseconds: dt.microsecond, milliseconds: dt.millisecond));
+}
+
+DateTime getUtcNow() {
+  return new DateTime.now().toUtc();
 }

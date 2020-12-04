@@ -1,10 +1,9 @@
-
 import 'dart:convert';
 import 'package:uuid/uuid.dart';
 
 import './candidate.dart';
 import './category.dart';
-
+import '../utils.dart';
 
 class Wadm {
   String id;
@@ -14,20 +13,22 @@ class Wadm {
   List<Candidate> candidates;
   List<Category> categories;
 
-  Wadm({String id, String title, DateTime createdAt,
-      DateTime updatedAt, List<Candidate> candidates, List<Category> categories}) {
+  Wadm(
+      {String id,
+      String title,
+      DateTime createdAt,
+      DateTime updatedAt,
+      List<Candidate> candidates,
+      List<Category> categories}) {
+    id ??= generateUuid();
 
-    if (id == null) {
-      id = Uuid().v1();
-    }
+    var now = getUtcNow();
+    now = removeMiliMicroSeconds(now);
+    createdAt ??= now;
+    updatedAt ??= now;
 
-    var now = new DateTime.now();
-    if (createdAt == null) {
-      createdAt = now;
-    }
-    if (updatedAt == null) {
-      updatedAt = now;
-    }
+    candidates ??= [];
+    categories ??= [];
 
     this.id = id;
     this.title = title;
@@ -39,16 +40,20 @@ class Wadm {
 
   factory Wadm.fromJson(Map<String, dynamic> wadm) {
     List<dynamic> decodedCandidates = json.decode(wadm['candidates']);
-    List<Candidate> candidates = decodedCandidates.map<Candidate>((each) => Candidate.fromJson(each)).toList();
+    List<Candidate> candidates = decodedCandidates
+        .map<Candidate>((each) => Candidate.fromJson(each))
+        .toList();
 
     List<dynamic> decodedCategory = json.decode(wadm['categories']);
-    List<Category> categories = decodedCategory.map<Category>((each) => Category.fromJson(each)).toList();
+    List<Category> categories = decodedCategory
+        .map<Category>((each) => Category.fromJson(each))
+        .toList();
 
     return Wadm(
       id: wadm['id'],
       title: wadm['title'],
-      createdAt: new DateTime.now(),
-      updatedAt: new DateTime.now(),
+      createdAt: convertStringToDateTime(wadm['createdAt']),
+      updatedAt: convertStringToDateTime(wadm['updatedAt']),
       candidates: candidates,
       categories: categories,
     );
@@ -57,14 +62,14 @@ class Wadm {
   Map<String, dynamic> toJson() => {
     'id': this.id,
     'title': this.title,
-    'createdAt': this.createdAt.toString(),
-    'updatedAt': this.updatedAt.toString(),
+    'createdAt': convertDateTimeToString(this.createdAt),
+    'updatedAt': convertDateTimeToString(this.updatedAt),
     'candidates': json.encode(this.candidates),
     'categories': json.encode(this.categories),
   };
 
-  void sort() {
-    // make list with weight and index
+  // sort by catetory's 1.weight, 2.title
+  void sortCategory() {
     List<Map<String, dynamic>> indexWithWeight = [];
     for (var i = 0; i < this.categories.length; i++) {
       indexWithWeight.add({
@@ -74,7 +79,6 @@ class Wadm {
       });
     }
 
-    // sort by 1.weight, 2.title
     indexWithWeight.sort((a, b) {
       var compare = b["weight"].compareTo(a["weight"]);
       if (compare != 0) {
@@ -83,7 +87,6 @@ class Wadm {
       return a["title"].compareTo(b["title"]);
     });
 
-    // update category
     List<Category> newCategory = [];
     for (var i = 0; i < this.categories.length; i++) {
       int targetIndex = indexWithWeight[i]['index'];
@@ -91,7 +94,7 @@ class Wadm {
     }
     this.categories = newCategory;
 
-    // update candidate's score
+    // sync candidate
     for (var i = 0; i < this.candidates.length; i++) {
       List<int> newScores = [];
       for (var j = 0; j < indexWithWeight.length; j++) {
@@ -100,8 +103,13 @@ class Wadm {
       }
       this.candidates[i].scores = newScores;
     }
+  }
 
-    print('sorted!!');
+  // TODO: Do we need this? When to call this?
+  void sortCandidate() {}
+
+  String generateUuid() {
+    return Uuid().v1();
   }
 
   bool candidateTitleExists(String title) {
@@ -113,25 +121,77 @@ class Wadm {
     return false;
   }
 
+  void updateTitle(String title) {
+    this.title = title;
+  }
+
   void addCandidate(String title) {
+    final candidateId = generateUuid();
+
     Candidate newCandidate = Candidate(
+        id: candidateId,
         title: title,
         scores: List<int>.filled(this.categories.length, 1, growable: true));
     this.candidates.add(newCandidate);
   }
 
-  void addCategory(Category category) {
+  void removeCandidate(String candidateId) {
+    this.candidates.removeWhere((candidate) => candidate.id == candidateId);
+  }
+
+  void updateCandidateTitle(String candidateId, String title) {
+    for (var candidate in this.candidates) {
+      if (candidate.id == candidateId) {
+        candidate.title = title;
+        break;
+      }
+    }
+  }
+
+  void addCategory(String title, int weight) {
+    final categoryId = generateUuid();
+
+    final category = Category(
+      id: categoryId,
+      title: title,
+      weight: weight,
+    );
+
     this.categories.add(category);
     for (var candidate in this.candidates) {
       candidate.scores.add(1);
     }
-    this.sort();
+
+    this.sortCategory();
   }
 
-  int getTotal(int colIdx) {
+  void removeCategory(String categoryId) {
+    for (var i = 0; i < this.categories.length; i++) {
+      if (this.categories[i].id == categoryId) {
+        this.categories.removeAt(i);
+        for (var candidate in this.candidates) {
+          candidate.scores.removeAt(i);
+        }
+        break;
+      }
+    }
+  }
+
+  void updateCategory(String categoryId, String title, int weight) {
+    for (var i = 0; i < this.categories.length; i++) {
+      if (this.categories[i].id == categoryId) {
+        this.categories[i].title = title;
+        this.categories[i].weight = weight;
+        this.sortCategory();
+        break;
+      }
+    }
+  }
+
+  int getTotal(int candidateIdx) {
     // total = candidate's score * category's weight
     int total = 0;
-    Candidate candidate = this.candidates[colIdx];
+    Candidate candidate = this.candidates[candidateIdx];
 
     for (var i = 0; i < this.categories.length; i++) {
       total += (this.categories[i].weight * candidate.scores[i]);

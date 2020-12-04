@@ -29,11 +29,14 @@ class WadmTable extends StatelessWidget {
     return StickyHeadersTable(
       cellDimensions: cellDimensions,
       columnsLength: wadm.candidates.length,
-      rowsLength: wadm.categories.length + 1, // 항목 + 총합
+      rowsLength: wadm.categories.length + 1, // with Total
       columnsTitleBuilder: (i) => Container(
         height: cellDimensions.stickyLegendHeight,
         width: cellDimensions.contentCellWidth,
-        child: CandidateFieldWidget(candidate: wadm.candidates[i]),
+        child: CandidateFieldWidget(
+          wadmId: wadmId,
+          candidate: wadm.candidates[i],
+        ),
         margin: EdgeInsets.symmetric(
           horizontal: 5,
         ),
@@ -54,7 +57,10 @@ class WadmTable extends StatelessWidget {
         return Container(
           height: cellDimensions.contentCellHeight,
           width: cellDimensions.stickyLegendWidth,
-          child: CategoryFieldWidget(category: wadm.categories[i]),
+          child: CategoryFieldWidget(
+            wadmId: wadmId,
+            category: wadm.categories[i],
+          ),
           margin: EdgeInsets.symmetric(
             vertical: 5,
           ),

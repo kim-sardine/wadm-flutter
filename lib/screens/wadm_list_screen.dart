@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../providers/wadms.dart';
 import '../widgets/wadm_list_item.dart';
 import './wadm_detail_screen.dart';
+import '../widgets/wadm_list_add_new_wadm_dialog.dart';
 
 class WadmListScreen extends StatelessWidget {
 
@@ -15,14 +16,22 @@ class WadmListScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('WADM!'),
+        title: Text('wadm!',style: TextStyle(color: Theme.of(context).accentColor),),
         actions: [
           IconButton(
             icon: Icon(
               Icons.add
             ),
+            color: Theme.of(context).accentColor,
             tooltip: 'Create New wadm',
-            onPressed: () => {},
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  content: AddNewWadmDialogWidget(),
+                ),
+              );
+            },
           )
         ],
       ),

@@ -2,38 +2,36 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
-import './models/wadm.dart';
-
-const WADMS_KEY = "wadms";
 
 class SharedPref {
 
   // TODO: Sort wadms by 'updated_at'
-  loadWadms() async {
+  Future<String> load(String key) async {
     final prefs = await SharedPreferences.getInstance();
-    final _wadms = prefs.getString(WADMS_KEY);
+    return prefs.getString(key);
+  }
 
-    if (_wadms != null) {
-      final wadmsJson = json.decode(_wadms);
-      final wadms = wadmsJson.map<Wadm>((wadm) => Wadm.fromJson(wadm)).toList();
-      return wadms;
+  dynamic loadJson(String key) async {
+    String prefValue = await this.load(key);
+    Object result;
+
+    try {
+      result = json.decode(prefValue);    
+    } catch (e) {
+      result = null;
     }
-    return [];
-  }
 
-  saveWadms(wadms) async {
-    print('saved!!');
-    await save(WADMS_KEY, wadms);
-  }
-
-  read(String key) async {
-    final prefs = await SharedPreferences.getInstance();
-    return json.decode(prefs.getString(key));
+    return result;
   }
 
   save(String key, value) async {
     final prefs = await SharedPreferences.getInstance();
-    prefs.setString(key, json.encode(value));
+    prefs.setString(key, value);
+  }
+
+  saveAsJson(String key, value) async {
+    String jsonValue = json.encode(value);
+    await this.save(key, jsonValue);
   }
 
   remove(String key) async {

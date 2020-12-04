@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../providers/wadms.dart';
 import '../widgets/wadm_detail_table.dart';
 import '../widgets/wadm_detail_action_dialog.dart';
+import '../widgets/wadm_detail_edit_dialog.dart';
 
 class WadmDetailScreen extends StatelessWidget {
 
@@ -10,14 +13,29 @@ class WadmDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final String wadmId = ModalRoute.of(context).settings.arguments;
+    final wadm = Provider.of<Wadms>(context).findById(wadmId);
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Wadm Detail'),
+        title: Text(wadm.title, style: TextStyle(color: Theme.of(context).accentColor),),
         actions: [
           IconButton(
+            icon: Icon(Icons.edit),
+            color: Theme.of(context).accentColor,
+            tooltip: 'Edit Wadm',
+            onPressed: () => {
+              showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  content: EditDialogWidget(wadmId: wadmId),
+                ),
+              )
+            },
+          ),
+          IconButton(
             icon: Icon(Icons.add),
-            tooltip: 'wadm action',
+            color: Theme.of(context).accentColor,
+            tooltip: 'Add element',
             onPressed: () => {
               showDialog(
                 context: context,
@@ -26,7 +44,7 @@ class WadmDetailScreen extends StatelessWidget {
                 ),
               )
             },
-          )
+          ),
         ],
       ),
       body: WadmTable(wadmId: wadmId)

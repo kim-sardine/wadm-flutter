@@ -11,7 +11,7 @@ class WadmListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 50,
-      color: Colors.amber[600],
+      color: Color(0XFFffc13b),
       child: Center(child: Text('${wadm.title}')),
     );
   }
