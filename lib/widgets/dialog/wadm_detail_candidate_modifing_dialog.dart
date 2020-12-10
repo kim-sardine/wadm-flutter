@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../providers/wadms.dart';
-import '../models/candidate.dart';
+import '../../providers/wadms.dart';
+import '../../models/candidate.dart';
 
 class CandidateModifingDialogWidget extends StatelessWidget {
   final String wadmId;
@@ -34,7 +34,6 @@ class CandidateModifingDialogWidget extends StatelessWidget {
               child: Text('삭제'),
               color: Colors.deepOrange,
               onPressed: () {
-                // TODO: Confirm once more?
                 wadm.removeCandidate(this.candidate.id);
                 wadmsProvider.updateWadm(wadm);
 

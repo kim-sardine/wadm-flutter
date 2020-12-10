@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../models/candidate.dart';
-import 'wadm_detail_candidate_modifing_dialog.dart';
+import 'dialog/wadm_detail_candidate_modifing_dialog.dart';
 
 class CandidateFieldWidget extends StatelessWidget {
   final String wadmId;

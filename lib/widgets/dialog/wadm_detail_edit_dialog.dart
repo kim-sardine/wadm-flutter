@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../providers/wadms.dart';
+import '../../providers/wadms.dart';
 
 class EditDialogWidget extends StatelessWidget {
   final String wadmId;

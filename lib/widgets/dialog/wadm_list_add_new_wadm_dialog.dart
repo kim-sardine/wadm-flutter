@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../providers/wadms.dart';
+import '../../providers/wadms.dart';
 
 class AddNewWadmDialogWidget extends StatelessWidget {
   @override

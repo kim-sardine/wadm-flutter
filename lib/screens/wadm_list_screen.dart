@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/wadms.dart';
-import '../widgets/wadm_list_item.dart';
 import './wadm_detail_screen.dart';
-import '../widgets/wadm_list_add_new_wadm_dialog.dart';
+import '../widgets/wadm_list_item.dart';
+import '../widgets/dialog/wadm_list_add_new_wadm_dialog.dart';
 
 class WadmListScreen extends StatelessWidget {
 

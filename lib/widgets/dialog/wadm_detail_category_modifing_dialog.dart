@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-import '../providers/wadms.dart';
-import '../models/category.dart';
-import '../utils.dart';
+import '../../providers/wadms.dart';
+import '../../models/category.dart';
+import '../../utils.dart';
 
 class CategoryModifingDialogWidget extends StatelessWidget {
   final String wadmId;

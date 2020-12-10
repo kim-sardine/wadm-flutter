@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../models/category.dart';
-import '../widgets/wadm_detail_category_modifing_dialog.dart';
+import 'dialog/wadm_detail_category_modifing_dialog.dart';
 
 class CategoryFieldWidget extends StatelessWidget {
   final String wadmId;

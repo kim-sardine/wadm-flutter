@@ -3,8 +3,8 @@ import 'package:provider/provider.dart';
 
 import '../providers/wadms.dart';
 import '../widgets/wadm_detail_table.dart';
-import '../widgets/wadm_detail_action_dialog.dart';
-import '../widgets/wadm_detail_edit_dialog.dart';
+import '../widgets/dialog/wadm_detail_action_dialog.dart';
+import '../widgets/dialog/wadm_detail_edit_dialog.dart';
 
 class WadmDetailScreen extends StatelessWidget {
 
