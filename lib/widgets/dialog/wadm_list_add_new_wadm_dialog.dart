@@ -23,7 +23,7 @@ class AddNewWadmDialogWidget extends StatelessWidget {
           margin: EdgeInsets.only(bottom: 20),
         ),
         RaisedButton(
-          child: Text(msg.dialogButtonCreate),
+          child: Text(msg.dialogButtonCreateNewWadm),
           color: Theme.of(context).primaryColor,
           textColor: Colors.white,
           onPressed: () {

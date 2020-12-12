@@ -29,27 +29,34 @@ class EditDialogWidget extends StatelessWidget {
           margin: EdgeInsets.only(bottom: 20),
         ),
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            RaisedButton(
-              child: Text(msg.dialogButtonDeleteWadm),
-              color: Colors.deepOrange,
-              onPressed: () {
-                wadmsProvider.removeWadm(wadmId);
+            Expanded(
+              flex: 4,
+              child: RaisedButton(
+                child: Text(msg.dialogButtonDeleteWadm),
+                color: Colors.deepOrange,
+                onPressed: () {
+                  wadmsProvider.removeWadm(wadmId);
 
-                Navigator.of(context)
-                    .pushNamedAndRemoveUntil('/wadm-list', (route) => false);
-              },
+                  Navigator.of(context)
+                      .pushNamedAndRemoveUntil('/wadm-list', (route) => false);
+                },
+              ),
             ),
-            RaisedButton(
-              child: Text(msg.dialogButtonUpdateWadmTitle),
-              color: Colors.lightGreen,
-              onPressed: () {
-                wadm.updateTitle(wadmTitleController.text);
-                wadmsProvider.updateWadm(wadm);
+            Spacer(),
+            Expanded(
+              flex: 4,
+              child: RaisedButton(
+                child: Text(msg.dialogButtonUpdateWadmTitle),
+                color: Colors.lightGreen,
+                onPressed: () {
+                  wadm.updateTitle(wadmTitleController.text);
+                  wadmsProvider.updateWadm(wadm);
 
-                Navigator.of(context).pop();
-              },
+                  Navigator.of(context).pop();
+                },
+              ),
             ),
           ],
         ),

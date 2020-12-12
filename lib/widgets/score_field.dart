@@ -4,6 +4,9 @@ import 'package:provider/provider.dart';
 
 import '../providers/wadms.dart';
 import '../utils.dart';
+import '../i18n/messages.dart';
+
+final msg = Messages();
 
 class ScoreFieldWidget extends StatelessWidget {
   final String wadmId;
@@ -18,18 +21,23 @@ class ScoreFieldWidget extends StatelessWidget {
     final wadm = wadmsProvider.findById(wadmId);
     final cellValue = wadm.candidates[colIdx].scores[rowIdx];
 
-    return TextField(
-      onChanged: (value) {
-        final inputValue = int.parse(value);
-        if (wadm.candidates[colIdx].scores[rowIdx] != inputValue) {
-          wadm.candidates[colIdx].scores[rowIdx] = inputValue;
-          wadmsProvider.updateWadm(wadm);
-        }
-      },
-      controller: TextEditingController(text: cellValue.toString()),
-      decoration: InputDecoration(labelText: "Score (1~10)"),
-      keyboardType: TextInputType.number,
-      inputFormatters: categoryWeightInputFormatter,
+    return Container(
+      margin: EdgeInsets.only(top: 10),
+      child: TextField(
+        onChanged: (value) {
+          final inputValue = int.parse(value);
+          if (wadm.candidates[colIdx].scores[rowIdx] != inputValue) {
+            wadm.candidates[colIdx].scores[rowIdx] = inputValue;
+            wadmsProvider.updateWadm(wadm);
+          }
+        },
+        controller: TextEditingController(text: cellValue.toString()),
+        decoration: InputDecoration(
+          hintText: msg.textInputLabelScore,
+        ),
+        keyboardType: TextInputType.number,
+        inputFormatters: categoryWeightInputFormatter,
+      ),
     );
   }
 }

@@ -7,6 +7,9 @@ import '../models/my_cell_dimensions.dart';
 import './candidate_field.dart';
 import './category_field.dart';
 import './score_field.dart';
+import '../i18n/messages.dart';
+
+final msg = Messages();
 
 final cellDimensions = MyCellDimensions(
   contentCellWidth: 110,
@@ -83,7 +86,30 @@ class WadmTable extends StatelessWidget {
           );
         }
       },
-      legendCell: Text('항목 \\ 후보'),
+      legendCell: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Text('${msg.candidate}'),
+              Icon(
+                Icons.arrow_forward,
+                size: 16,
+              ),
+            ],
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text('${msg.category}'),
+              Icon(
+                Icons.arrow_downward,
+                size: 16,
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

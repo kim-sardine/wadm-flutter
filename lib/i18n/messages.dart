@@ -2,8 +2,15 @@ import 'package:intl/intl.dart';
 
 class Messages {
 
-  String get tooltipCreateNewWadm => Intl.message("Create wew wadm",
+  String get tooltipCreateNewWadm => Intl.message("Create new wadm",
     name: "tooltipCreateNewWadm"
+  );
+  
+  String get category => Intl.message("Category",
+    name: "category"
+  );
+  String get candidate => Intl.message("Candidate",
+    name: "candidate"
   );
 
   String get dialogLabelWadmTitle => Intl.message("Title",
@@ -11,6 +18,9 @@ class Messages {
   );
   String get dialogButtonCreate => Intl.message("Create",
     name: "dialogButtonCreate"
+  );
+  String get dialogButtonCreateNewWadm => Intl.message("Create new wadm",
+    name: "dialogButtonCreateNewWadm"
   );
   String get dialogButtonAdd => Intl.message("Add",
     name: "dialogButtonAdd"
@@ -45,6 +55,10 @@ class Messages {
   );
   String get dialogButtonAddCandidate => Intl.message("Add new candidate",
     name: "dialogButtonAddCandidate",
+  );
+
+  String get textInputLabelScore => Intl.message("Score (1~10)",
+    name: "textInputLabelScore",
   );
 
   String get widgetMessage => Intl.message("Widget Message!",
