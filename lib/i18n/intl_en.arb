@@ -1,12 +1,98 @@
 {
-  "@@last_modified": "2020-12-12T14:01:54.201350",
-  "widgetMessage": "Widget Message!",
-  "@widgetMessage": {
+  "@@last_modified": "2020-12-13T00:28:54.391191",
+  "tooltipCreateNewWadm": "Create new wadm",
+  "@tooltipCreateNewWadm": {
     "type": "text",
     "placeholders": {}
   },
-  "appName": "App name!",
-  "@appName": {
+  "category": "Category",
+  "@category": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "candidate": "Candidate",
+  "@candidate": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "dialogLabelWadmTitle": "Title",
+  "@dialogLabelWadmTitle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "dialogButtonCreate": "Create",
+  "@dialogButtonCreate": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "dialogButtonCreateNewWadm": "Create new wadm",
+  "@dialogButtonCreateNewWadm": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "dialogButtonAdd": "Add",
+  "@dialogButtonAdd": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "dialogButtonDelete": "Delete",
+  "@dialogButtonDelete": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "dialogButtonDeleteWadm": "Delete wadm",
+  "@dialogButtonDeleteWadm": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "dialogButtonUpdate": "Update",
+  "@dialogButtonUpdate": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "dialogButtonUpdateWadmTitle": "Change title",
+  "@dialogButtonUpdateWadmTitle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "dialogLabelCategoryTitle": "Category Title",
+  "@dialogLabelCategoryTitle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "dialogLabelCategoryWeight": "Weight (1~10)",
+  "@dialogLabelCategoryWeight": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "dialogLabelCandidateTitle": "Candidate Title",
+  "@dialogLabelCandidateTitle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "dialogTitleSelectAction": "Choose the action you want",
+  "@dialogTitleSelectAction": {
+    "description": "원하는 동작을 선택해주세요",
+    "type": "text",
+    "placeholders": {}
+  },
+  "dialogButtonAddCategory": "Add new category",
+  "@dialogButtonAddCategory": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "dialogButtonAddCandidate": "Add new candidate",
+  "@dialogButtonAddCandidate": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "textInputLabelScore": "Score (1~10)",
+  "@textInputLabelScore": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "widgetMessage": "Widget Message!",
+  "@widgetMessage": {
     "type": "text",
     "placeholders": {}
   }

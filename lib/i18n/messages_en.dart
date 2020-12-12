@@ -21,7 +21,24 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
-    "appName" : MessageLookupByLibrary.simpleMessage("App name!"),
+    "candidate" : MessageLookupByLibrary.simpleMessage("Candidate"),
+    "category" : MessageLookupByLibrary.simpleMessage("Category"),
+    "dialogButtonAdd" : MessageLookupByLibrary.simpleMessage("Add"),
+    "dialogButtonAddCandidate" : MessageLookupByLibrary.simpleMessage("Add new candidate"),
+    "dialogButtonAddCategory" : MessageLookupByLibrary.simpleMessage("Add new category"),
+    "dialogButtonCreate" : MessageLookupByLibrary.simpleMessage("Create"),
+    "dialogButtonCreateNewWadm" : MessageLookupByLibrary.simpleMessage("Create new wadm"),
+    "dialogButtonDelete" : MessageLookupByLibrary.simpleMessage("Delete"),
+    "dialogButtonDeleteWadm" : MessageLookupByLibrary.simpleMessage("Delete wadm"),
+    "dialogButtonUpdate" : MessageLookupByLibrary.simpleMessage("Update"),
+    "dialogButtonUpdateWadmTitle" : MessageLookupByLibrary.simpleMessage("Change title"),
+    "dialogLabelCandidateTitle" : MessageLookupByLibrary.simpleMessage("Candidate Title"),
+    "dialogLabelCategoryTitle" : MessageLookupByLibrary.simpleMessage("Category Title"),
+    "dialogLabelCategoryWeight" : MessageLookupByLibrary.simpleMessage("Weight (1~10)"),
+    "dialogLabelWadmTitle" : MessageLookupByLibrary.simpleMessage("Title"),
+    "dialogTitleSelectAction" : MessageLookupByLibrary.simpleMessage("Choose the action you want"),
+    "textInputLabelScore" : MessageLookupByLibrary.simpleMessage("Score (1~10)"),
+    "tooltipCreateNewWadm" : MessageLookupByLibrary.simpleMessage("Create new wadm"),
     "widgetMessage" : MessageLookupByLibrary.simpleMessage("Widget Message!")
   };
 }

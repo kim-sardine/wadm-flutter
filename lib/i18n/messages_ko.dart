@@ -21,7 +21,24 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
-    "appName" : MessageLookupByLibrary.simpleMessage("앱 이름!"),
-    "widgetMessage" : MessageLookupByLibrary.simpleMessage("위젯 메세지!")
+    "candidate" : MessageLookupByLibrary.simpleMessage("후보"),
+    "category" : MessageLookupByLibrary.simpleMessage("카테고리"),
+    "dialogButtonAdd" : MessageLookupByLibrary.simpleMessage("추가"),
+    "dialogButtonAddCandidate" : MessageLookupByLibrary.simpleMessage("새 후보 추가"),
+    "dialogButtonAddCategory" : MessageLookupByLibrary.simpleMessage("새 카테고리 추가"),
+    "dialogButtonCreate" : MessageLookupByLibrary.simpleMessage("만들기"),
+    "dialogButtonCreateNewWadm" : MessageLookupByLibrary.simpleMessage("새 wadm 만들기"),
+    "dialogButtonDelete" : MessageLookupByLibrary.simpleMessage("삭제"),
+    "dialogButtonDeleteWadm" : MessageLookupByLibrary.simpleMessage("wadm 삭제"),
+    "dialogButtonUpdate" : MessageLookupByLibrary.simpleMessage("수정"),
+    "dialogButtonUpdateWadmTitle" : MessageLookupByLibrary.simpleMessage("타이틀 변경"),
+    "dialogLabelCandidateTitle" : MessageLookupByLibrary.simpleMessage("후보명"),
+    "dialogLabelCategoryTitle" : MessageLookupByLibrary.simpleMessage("카테고리명"),
+    "dialogLabelCategoryWeight" : MessageLookupByLibrary.simpleMessage("가중치 (1~10)"),
+    "dialogLabelWadmTitle" : MessageLookupByLibrary.simpleMessage("wadm 타이틀"),
+    "dialogTitleSelectAction" : MessageLookupByLibrary.simpleMessage("원하는 동작을 선택해주세요"),
+    "textInputLabelScore" : MessageLookupByLibrary.simpleMessage("점수 (1~10)"),
+    "tooltipCreateNewWadm" : MessageLookupByLibrary.simpleMessage("새 wadm 만들기"),
+    "widgetMessage" : MessageLookupByLibrary.simpleMessage("Widget Message!")
   };
 }
