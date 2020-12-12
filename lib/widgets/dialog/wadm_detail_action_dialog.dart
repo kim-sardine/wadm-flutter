@@ -4,6 +4,9 @@ import 'package:provider/provider.dart';
 
 import '../../providers/wadms.dart';
 import '../../utils.dart';
+import '../../i18n/messages.dart';
+
+final msg = Messages();
 
 class DetailActionDialogWidget extends StatelessWidget {
   final String wadmId;
@@ -25,7 +28,7 @@ class DetailActionDialogWidget extends StatelessWidget {
       children: <Widget>[
         Container(
           child: Text(
-            "원하는 동작을 선택해주세요",
+            msg.dialogTitleSelectAction,
             textAlign: TextAlign.center,
             style: TextStyle(
               color: Colors.blue,
@@ -36,8 +39,8 @@ class DetailActionDialogWidget extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            RaisedButton(
-              child: Text('항목 추가'),
+            ActionButton(
+              title: msg.dialogButtonAddCategory,
               onPressed: () {
                 showDialog(
                   context: context,
@@ -47,63 +50,32 @@ class DetailActionDialogWidget extends StatelessWidget {
                       children: <Widget>[
                         TextField(
                           controller: categoryTitleController,
-                          decoration:
-                              InputDecoration(labelText: "항목명"),
+                          decoration: InputDecoration(
+                              labelText: msg.dialogLabelCategoryTitle),
                         ),
                         TextField(
                           controller: catetoryWeightController,
                           decoration: InputDecoration(
-                              labelText: "가중치 (1~10)"),
+                              labelText: msg.dialogLabelCategoryWeight),
                           keyboardType: TextInputType.number,
                           inputFormatters: categoryWeightInputFormatter,
                         ),
-                        Container( // TODO: into a module
+                        Container(
                           margin: EdgeInsets.only(top: 20),
                           child: RaisedButton(
-                              child: Text('추가하기'),
-                              color: Colors.lightGreen,
-                              onPressed: () {
-                                wadm.addCategory(categoryTitleController.text, int.parse(catetoryWeightController.text));
-                                wadmsProvider.updateWadm(wadm);
-
-                                categoryTitleController.clear();
-                                catetoryWeightController.clear();
-                                Navigator.of(context)
-                                    .popUntil(ModalRoute.withName(this.detailScreenRouteName));
-                              },
-                            ),
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              },
-            ),
-            RaisedButton(
-              child: Text('후보 추가'),
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (context) => AlertDialog(
-                    content: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        TextField(
-                          controller: candidateController,
-                          decoration:
-                              InputDecoration(labelText: "후보명"),
-                        ),
-                        Container( // TODO: into a module
-                          margin: EdgeInsets.only(top: 20),
-                          child: RaisedButton(
-                            child: Text('추가하기'),
+                            child: Text(msg.dialogButtonAdd),
                             color: Colors.lightGreen,
                             onPressed: () {
-                              wadm.addCandidate(candidateController.text);
+                              wadm.addCategory(categoryTitleController.text,
+                                  int.parse(catetoryWeightController.text));
                               wadmsProvider.updateWadm(wadm);
-                              candidateController.clear();
+
+                              categoryTitleController.clear();
+                              catetoryWeightController.clear();
                               Navigator.of(context)
-                                  .popUntil(ModalRoute.withName(this.detailScreenRouteName));
+                                  .popUntil(ModalRoute.withName(
+                                this.detailScreenRouteName,
+                              ));
                             },
                           ),
                         ),
@@ -113,9 +85,66 @@ class DetailActionDialogWidget extends StatelessWidget {
                 );
               },
             ),
+            Spacer(),
+            ActionButton(
+              title: msg.dialogButtonAddCandidate,
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    content: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        TextField(
+                          controller: candidateController,
+                          decoration: InputDecoration(
+                              labelText: msg.dialogLabelCandidateTitle),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(top: 20),
+                          child: RaisedButton(
+                            child: Text(msg.dialogButtonAdd),
+                            color: Colors.lightGreen,
+                            onPressed: () {
+                              wadm.addCandidate(candidateController.text);
+                              wadmsProvider.updateWadm(wadm);
+                              candidateController.clear();
+                              Navigator.of(context).popUntil(
+                                  ModalRoute.withName(
+                                      this.detailScreenRouteName));
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            )
           ],
         ),
       ],
+    );
+  }
+}
+
+class ActionButton extends StatelessWidget {
+  final String title;
+  final Function onPressed;
+
+  const ActionButton({Key key, this.title, this.onPressed}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      flex: 4,
+      child: RaisedButton(
+        child: Padding(
+          padding: EdgeInsets.all(4.0),
+          child: Text(this.title),
+        ),
+        onPressed: this.onPressed,
+      ),
     );
   }
 }

@@ -3,6 +3,9 @@ import 'package:provider/provider.dart';
 
 import '../../providers/wadms.dart';
 import '../../models/candidate.dart';
+import '../../i18n/messages.dart';
+
+final msg = Messages();
 
 class CandidateModifingDialogWidget extends StatelessWidget {
   final String wadmId;
@@ -23,7 +26,7 @@ class CandidateModifingDialogWidget extends StatelessWidget {
         Container(
           child: TextField(
             controller: candidateController,
-            decoration: InputDecoration(labelText: "후보명"),
+            decoration: InputDecoration(labelText: msg.dialogLabelCandidateTitle),
           ),
           margin: EdgeInsets.only(bottom: 20),
         ),
@@ -31,7 +34,7 @@ class CandidateModifingDialogWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             RaisedButton(
-              child: Text('삭제'),
+              child: Text(msg.dialogButtonDelete),
               color: Colors.deepOrange,
               onPressed: () {
                 wadm.removeCandidate(this.candidate.id);
@@ -41,7 +44,7 @@ class CandidateModifingDialogWidget extends StatelessWidget {
               },
             ),
             RaisedButton(
-              child: Text('수정'),
+              child: Text(msg.dialogButtonUpdate),
               color: Theme.of(context).primaryColor,
               textColor: Colors.white,
               onPressed: () {

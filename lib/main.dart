@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'i18n/app_localizations.dart';
 
 import './screens/wadm_list_screen.dart';
 import './screens/wadm_detail_screen.dart';
@@ -35,7 +37,6 @@ Map<int, Color> accentColorCodes = {
 
 MaterialColor accentColor = MaterialColor(0XFFffc13b, accentColorCodes);
 
-
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -56,6 +57,12 @@ class MyApp extends StatelessWidget {
           WadmListScreen.routeName: (ctx) => WadmListScreen(),
           WadmDetailScreen.routeName: (ctx) => WadmDetailScreen(),
         },
+        localizationsDelegates: [
+          AppLocalizationDelegate(),
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+        ],
+        supportedLocales: [Locale("en"), Locale("ko")],
       ),
     );
   }

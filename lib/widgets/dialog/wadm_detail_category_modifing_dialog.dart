@@ -5,6 +5,9 @@ import 'package:provider/provider.dart';
 import '../../providers/wadms.dart';
 import '../../models/category.dart';
 import '../../utils.dart';
+import '../../i18n/messages.dart';
+
+final msg = Messages();
 
 class CategoryModifingDialogWidget extends StatelessWidget {
   final String wadmId;
@@ -29,11 +32,11 @@ class CategoryModifingDialogWidget extends StatelessWidget {
             children: [
               TextField(
                 controller: categoryTitleController,
-                decoration: InputDecoration(labelText: "항목명"),
+                decoration: InputDecoration(labelText: msg.dialogLabelCategoryTitle),
               ),
               TextField(
                 controller: catetoryWeightController,
-                decoration: InputDecoration(labelText: "가중치 (1~10)"),
+                decoration: InputDecoration(labelText: msg.dialogLabelCategoryWeight),
                 keyboardType: TextInputType.number,
                 inputFormatters: categoryWeightInputFormatter,
               ),
@@ -45,7 +48,7 @@ class CategoryModifingDialogWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             RaisedButton(
-              child: Text('삭제'),
+              child: Text(msg.dialogButtonDelete),
               color: Colors.deepOrange,
               onPressed: () {
                 wadm.removeCategory(category.id);
@@ -55,7 +58,7 @@ class CategoryModifingDialogWidget extends StatelessWidget {
               },
             ),
             RaisedButton(
-              child: Text('수정'),
+              child: Text(msg.dialogButtonUpdate),
               color: Theme.of(context).primaryColor,
               textColor: Colors.white,
               onPressed: () {

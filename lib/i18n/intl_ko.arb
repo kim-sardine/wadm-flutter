@@ -1,0 +1,13 @@
+{
+  "@@last_modified": "2020-12-12T14:01:54.201350",
+  "widgetMessage": "위젯 메세지!",
+  "@widgetMessage": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "appName": "앱 이름!",
+  "@appName": {
+    "type": "text",
+    "placeholders": {}
+  }
+}

@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/wadms.dart';
+import '../../i18n/messages.dart';
+
+final msg = Messages();
 
 class EditDialogWidget extends StatelessWidget {
   final String wadmId;
@@ -21,7 +24,7 @@ class EditDialogWidget extends StatelessWidget {
         Container(
           child: TextField(
             controller: wadmTitleController,
-            decoration: InputDecoration(labelText: "Title"),
+            decoration: InputDecoration(labelText: msg.dialogLabelWadmTitle),
           ),
           margin: EdgeInsets.only(bottom: 20),
         ),
@@ -29,7 +32,7 @@ class EditDialogWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             RaisedButton(
-              child: Text('Wadm 삭제'),
+              child: Text(msg.dialogButtonDeleteWadm),
               color: Colors.deepOrange,
               onPressed: () {
                 wadmsProvider.removeWadm(wadmId);
@@ -39,7 +42,7 @@ class EditDialogWidget extends StatelessWidget {
               },
             ),
             RaisedButton(
-              child: Text('타이틀 수정'),
+              child: Text(msg.dialogButtonUpdateWadmTitle),
               color: Colors.lightGreen,
               onPressed: () {
                 wadm.updateTitle(wadmTitleController.text);

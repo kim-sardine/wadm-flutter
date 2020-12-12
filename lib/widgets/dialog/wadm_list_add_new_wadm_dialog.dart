@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/wadms.dart';
+import '../../i18n/messages.dart';
+
+final msg = Messages();
 
 class AddNewWadmDialogWidget extends StatelessWidget {
   @override
@@ -15,12 +18,12 @@ class AddNewWadmDialogWidget extends StatelessWidget {
         Container(
           child: TextField(
             controller: wadmTitleController,
-            decoration: InputDecoration(labelText: "Title"),
+            decoration: InputDecoration(labelText: msg.dialogLabelWadmTitle),
           ),
           margin: EdgeInsets.only(bottom: 20),
         ),
         RaisedButton(
-          child: Text('Create'),
+          child: Text(msg.dialogButtonCreate),
           color: Theme.of(context).primaryColor,
           textColor: Colors.white,
           onPressed: () {
