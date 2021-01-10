@@ -15,9 +15,10 @@ class Wadms with ChangeNotifier {
   }
 
   void setup() async {
-    final wadmsJson = await sharedPref.loadJson(WADMS_KEY);
-    _wadms = wadmsJson.map<Wadm>((wadm) => Wadm.fromJson(wadm)).toList();
-    notifyListeners();
+    sharedPref.loadJson(WADMS_KEY).then((wadmsJson) => {
+        this._wadms = wadmsJson.map<Wadm>((wadm) => Wadm.fromJson(wadm)).toList(),
+        notifyListeners()
+    });
   }
 
   List<Wadm> get wadms {
@@ -38,6 +39,8 @@ class Wadms with ChangeNotifier {
 
   void removeWadm(id) {
     _wadms.removeWhere((wadm) => wadm.id == id);
+
+    saveWadms();
     notifyListeners();
   }
 

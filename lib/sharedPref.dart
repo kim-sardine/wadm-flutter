@@ -11,7 +11,7 @@ class SharedPref {
     return prefs.getString(key);
   }
 
-  dynamic loadJson(String key) async {
+  Future<dynamic> loadJson(String key) async {
     String prefValue = await this.load(key);
     Object result;
 

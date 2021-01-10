@@ -7,7 +7,6 @@ import '../widgets/dialog/wadm_detail_action_dialog.dart';
 import '../widgets/dialog/wadm_detail_edit_dialog.dart';
 
 class WadmDetailScreen extends StatelessWidget {
-
   static const routeName = '/wadm-detail';
 
   @override
@@ -15,39 +14,53 @@ class WadmDetailScreen extends StatelessWidget {
     final String wadmId = ModalRoute.of(context).settings.arguments;
     final wadm = Provider.of<Wadms>(context).findById(wadmId);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(wadm.title, style: TextStyle(color: Theme.of(context).accentColor),),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.edit),
-            color: Theme.of(context).accentColor,
-            tooltip: 'Edit Wadm',
-            onPressed: () => {
-              showDialog(
-                context: context,
-                builder: (context) => AlertDialog(
-                  content: EditDialogWidget(wadmId: wadmId),
-                ),
-              )
-            },
+
+    return WillPopScope(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            wadm.title,
+            style: TextStyle(color: Theme.of(context).accentColor),
           ),
-          IconButton(
-            icon: Icon(Icons.add),
-            color: Theme.of(context).accentColor,
-            tooltip: 'Add element',
-            onPressed: () => {
-              showDialog(
-                context: context,
-                builder: (context) => AlertDialog(
-                  content: DetailActionDialogWidget(wadmId: wadmId, detailScreenRouteName: routeName,),
-                ),
-              )
-            },
-          ),
-        ],
+          actions: [
+            IconButton(
+              icon: Icon(Icons.edit),
+              color: Theme.of(context).accentColor,
+              tooltip: 'Edit Wadm',
+              onPressed: () => {
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    content: EditDialogWidget(wadmId: wadmId),
+                  ),
+                )
+              },
+            ),
+            IconButton(
+              icon: Icon(Icons.add),
+              color: Theme.of(context).accentColor,
+              tooltip: 'Add element',
+              onPressed: () => {
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    content: DetailActionDialogWidget(
+                      wadmId: wadmId,
+                      detailScreenRouteName: routeName,
+                    ),
+                  ),
+                )
+              },
+            ),
+          ],
+        ),
+        body: WadmTable(wadmId: wadmId),
       ),
-      body: WadmTable(wadmId: wadmId)
+      onWillPop: () async {
+        Navigator.pop(context);
+        wadm.sortCandidate();
+        return false;
+      },
     );
   }
 }

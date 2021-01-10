@@ -29,7 +29,6 @@ class EditDialogWidget extends StatelessWidget {
           margin: EdgeInsets.only(bottom: 20),
         ),
         Row(
-          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Expanded(
               flex: 4,
@@ -38,7 +37,6 @@ class EditDialogWidget extends StatelessWidget {
                 color: Colors.deepOrange,
                 onPressed: () {
                   wadmsProvider.removeWadm(wadmId);
-
                   Navigator.of(context)
                       .pushNamedAndRemoveUntil('/wadm-list', (route) => false);
                 },

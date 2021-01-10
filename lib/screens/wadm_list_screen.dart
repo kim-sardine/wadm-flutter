@@ -15,7 +15,7 @@ class WadmListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final wadms = context.watch<Wadms>().wadms;
+    final wadms = Provider.of<Wadms>(context).wadms;
 
     return Scaffold(
       appBar: AppBar(

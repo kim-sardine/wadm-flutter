@@ -38,25 +38,26 @@ class Wadm {
     this.categories = categories;
   }
 
-  factory Wadm.fromJson(Map<String, dynamic> wadm) {
-    List<dynamic> decodedCandidates = json.decode(wadm['candidates']);
+  factory Wadm.fromJson(Map<String, dynamic> jsonWadm) {
+    List<dynamic> decodedCandidates = json.decode(jsonWadm['candidates']);
     List<Candidate> candidates = decodedCandidates
         .map<Candidate>((each) => Candidate.fromJson(each))
         .toList();
 
-    List<dynamic> decodedCategory = json.decode(wadm['categories']);
+    List<dynamic> decodedCategory = json.decode(jsonWadm['categories']);
     List<Category> categories = decodedCategory
         .map<Category>((each) => Category.fromJson(each))
         .toList();
-
-    return Wadm(
-      id: wadm['id'],
-      title: wadm['title'],
-      createdAt: convertStringToDateTime(wadm['createdAt']),
-      updatedAt: convertStringToDateTime(wadm['updatedAt']),
+    
+    var wadm = Wadm(
+      id: jsonWadm['id'],
+      title: jsonWadm['title'],
+      createdAt: convertStringToDateTime(jsonWadm['createdAt']),
+      updatedAt: convertStringToDateTime(jsonWadm['updatedAt']),
       candidates: candidates,
       categories: categories,
     );
+    return wadm;
   }
 
   Map<String, dynamic> toJson() => {
@@ -105,8 +106,13 @@ class Wadm {
     }
   }
 
-  // TODO: Do we need this? When to call this?
-  void sortCandidate() {}
+  void sortCandidate() {
+    this.candidates.sort((a, b) {
+      var sumA = a.scores.fold(0, (previous, current) => previous + current);
+      var sumB = b.scores.fold(0, (previous, current) => previous + current);
+      return sumB.compareTo(sumA);
+    });
+  }
 
   String generateUuid() {
     return Uuid().v1();
