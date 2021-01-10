@@ -140,8 +140,8 @@ class ActionButton extends StatelessWidget {
       flex: 4,
       child: RaisedButton(
         child: Padding(
-          padding: EdgeInsets.all(4.0),
-          child: Text(this.title),
+          padding: EdgeInsets.all(0.5),
+          child: FittedBox(fit: BoxFit.fitWidth, child: Text(this.title)),
         ),
         onPressed: this.onPressed,
       ),
