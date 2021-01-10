@@ -14,7 +14,6 @@ class WadmDetailScreen extends StatelessWidget {
     final String wadmId = ModalRoute.of(context).settings.arguments;
     final wadm = Provider.of<Wadms>(context).findById(wadmId);
 
-
     return WillPopScope(
       child: Scaffold(
         appBar: AppBar(

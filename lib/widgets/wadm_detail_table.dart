@@ -29,6 +29,15 @@ class WadmTable extends StatelessWidget {
       context,
     ).findById(wadmId);
 
+    if (wadm.candidates.length == 0 && wadm.categories.length == 0) {
+      return Center(
+          child: Text(
+            msg.textEmptyTableMessage,
+            textAlign: TextAlign.center,
+          ),
+        );
+    }
+
     return StickyHeadersTable(
       cellDimensions: cellDimensions,
       columnsLength: wadm.candidates.length,

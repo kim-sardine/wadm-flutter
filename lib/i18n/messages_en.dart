@@ -37,8 +37,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "dialogLabelCategoryWeight" : MessageLookupByLibrary.simpleMessage("Weight (1~10)"),
     "dialogLabelWadmTitle" : MessageLookupByLibrary.simpleMessage("Title"),
     "dialogTitleSelectAction" : MessageLookupByLibrary.simpleMessage("Choose the action you want"),
+    "textEmptyTableMessage" : MessageLookupByLibrary.simpleMessage("Press the \'+\' button in the upper right corner to start wadm."),
     "textInputLabelScore" : MessageLookupByLibrary.simpleMessage("Score (1~10)"),
-    "tooltipCreateNewWadm" : MessageLookupByLibrary.simpleMessage("Create new wadm"),
-    "widgetMessage" : MessageLookupByLibrary.simpleMessage("Widget Message!")
+    "tooltipCreateNewWadm" : MessageLookupByLibrary.simpleMessage("Create new wadm")
   };
 }

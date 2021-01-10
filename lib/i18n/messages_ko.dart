@@ -37,8 +37,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "dialogLabelCategoryWeight" : MessageLookupByLibrary.simpleMessage("가중치 (1~10)"),
     "dialogLabelWadmTitle" : MessageLookupByLibrary.simpleMessage("wadm 타이틀"),
     "dialogTitleSelectAction" : MessageLookupByLibrary.simpleMessage("원하는 동작을 선택해주세요"),
+    "textEmptyTableMessage" : MessageLookupByLibrary.simpleMessage("오른쪽 위에 위치한 \'+\' 버튼을 눌러 wadm 을 만들어주세요."),
     "textInputLabelScore" : MessageLookupByLibrary.simpleMessage("점수 (1~10)"),
-    "tooltipCreateNewWadm" : MessageLookupByLibrary.simpleMessage("새 wadm 만들기"),
-    "widgetMessage" : MessageLookupByLibrary.simpleMessage("Widget Message!")
+    "tooltipCreateNewWadm" : MessageLookupByLibrary.simpleMessage("새 wadm 만들기")
   };
 }

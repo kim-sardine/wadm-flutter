@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2020-12-13T00:28:54.391191",
+  "@@last_modified": "2021-01-10T23:12:04.851933",
   "tooltipCreateNewWadm": "새 wadm 만들기",
   "@tooltipCreateNewWadm": {
     "type": "text",
@@ -93,6 +93,11 @@
   },
   "widgetMessage": "Widget Message!",
   "@widgetMessage": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "textEmptyTableMessage": "오른쪽 위에 위치한 '+' 버튼을 눌러 wadm 을 만들어주세요.",
+  "@textEmptyTableMessage": {
     "type": "text",
     "placeholders": {}
   }

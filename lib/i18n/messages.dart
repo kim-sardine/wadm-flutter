@@ -61,7 +61,7 @@ class Messages {
     name: "textInputLabelScore",
   );
 
-  String get widgetMessage => Intl.message("Widget Message!",
-    name: "widgetMessage"
+  String get textEmptyTableMessage => Intl.message("Press the '+' button in the upper right corner to start wadm.",
+    name: "textEmptyTableMessage"
   );
 }
